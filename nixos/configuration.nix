@@ -258,6 +258,7 @@
     duf
     smartmontools
     nvme-cli
+    stow               # HAVE THIS BEFORE INSTALL.SH
 
     # ── Hardware & diagnostics ────────────────────────────────────────────
     pciutils
