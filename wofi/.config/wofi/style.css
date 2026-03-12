@@ -1,0 +1,71 @@
+/* ~/.config/wofi/style.css — Catppuccin Mocha */
+
+* {
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 14px;
+}
+
+/* ── Main window ──────────────────────────────────────────────────────────── */
+window {
+  background-color: rgba(30, 30, 46, 0.95);  /* base */
+  border: 1px solid #45475a;                  /* surface1 */
+  border-radius: 12px;
+}
+
+/* ── Search box ───────────────────────────────────────────────────────────── */
+#input {
+  background-color: #313244;   /* surface0 */
+  color: #cdd6f4;              /* text */
+  border: 1px solid #45475a;  /* surface1 */
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 10px;
+  outline: none;
+  caret-color: #cba6f7;        /* mauve */
+}
+
+#input:focus {
+  border-color: #cba6f7;       /* mauve */
+}
+
+/* ── Scrollable list ──────────────────────────────────────────────────────── */
+#scroll {
+  margin: 0 6px 6px 6px;
+}
+
+#inner-box {
+  background: transparent;
+}
+
+#outer-box {
+  background: transparent;
+  padding: 4px;
+}
+
+/* ── Each entry ───────────────────────────────────────────────────────────── */
+#entry {
+  background-color: transparent;
+  color: #cdd6f4;              /* text */
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin: 2px 0;
+}
+
+#entry:hover {
+  background-color: #313244;   /* surface0 */
+}
+
+#entry:selected {
+  background-color: #45475a;   /* surface1 */
+  color: #cba6f7;              /* mauve */
+}
+
+/* ── App name text ────────────────────────────────────────────────────────── */
+#text {
+  color: #cdd6f4;
+  margin-left: 8px;
+}
+
+#text:selected {
+  color: #cba6f7;              /* mauve highlight */
+}

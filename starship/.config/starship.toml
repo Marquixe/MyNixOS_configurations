@@ -1,0 +1,86 @@
+# ══════════════════════════════════════════════════════════════════════════════
+#  ~/.config/starship.toml
+# ══════════════════════════════════════════════════════════════════════════════
+
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+[╭─](bold yellow)$os$username$hostname$directory$git_branch$git_status$python$nodejs$nix_shell
+[╰───](bold yellow)$character"""
+
+# ── Prompt character ──────────────────────────────────────────────────────────
+[character]
+success_symbol = '[❯](bold green)'
+error_symbol   = '[❯](bold red)'
+
+# ── OS icon ───────────────────────────────────────────────────────────────────
+[os]
+disabled = false
+style    = 'bold blue'
+
+[os.symbols]
+NixOS = '❄ '
+
+# ── User ──────────────────────────────────────────────────────────────────────
+[username]
+show_always = true
+style_user  = 'bold cyan'
+style_root  = 'bold red'
+format      = '[$user]($style)'
+
+# ── Hostname ──────────────────────────────────────────────────────────────────
+[hostname]
+ssh_only  = false
+style     = 'bold yellow'
+format    = '[@$hostname]($style) '
+
+# ── Directory ─────────────────────────────────────────────────────────────────
+[directory]
+style            = 'bold lavender'
+truncation_length = 4
+truncate_to_repo  = true
+format           = 'in [  $path]($style)[$read_only]($read_only_style) '
+
+# ── Git ───────────────────────────────────────────────────────────────────────
+[git_branch]
+symbol = ' '
+style  = 'bold green'
+format = 'on [$symbol$branch]($style) '
+
+[git_status]
+style    = 'bold red'
+format   = '([$all_status$ahead_behind]($style) )'
+ahead    = '⇡${count}'
+behind   = '⇣${count}'
+modified = '!${count}'
+untracked = '?${count}'
+staged   = '+${count}'
+
+# ── Languages (only show when relevant) ───────────────────────────────────────
+[python]
+symbol = ' '
+style  = 'bold yellow'
+format = 'via [$symbol$version]($style) '
+
+[nodejs]
+symbol = ' '
+style  = 'bold green'
+format = 'via [$symbol$version]($style) '
+
+[rust]
+symbol = ' '
+style  = 'bold orange'
+format = 'via [$symbol$version]($style) '
+
+# ── Nix shell indicator ───────────────────────────────────────────────────────
+[nix_shell]
+symbol   = '❄ '
+style    = 'bold blue'
+format   = 'via [$symbol$state]($style) '
+
+# ── Command duration (shows if command took > 2s) ────────────────────────────
+[cmd_duration]
+min_time          = 2000
+style             = 'bold yellow'
+format            = 'took [$duration]($style) '
+show_notifications = true
