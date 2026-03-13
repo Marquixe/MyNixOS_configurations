@@ -18,8 +18,14 @@
       fsType = "ext4";
     };
 
+  #fileSystems."/boot" =
+  #  { device = "/dev/disk/by-uuid/FED2-B607";
+  #    fsType = "vfat";
+  #    options = [ "fmask=0077" "dmask=0077" ];
+  #  };
+
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/FED2-B607";
+    { device = "/dev/disk/by-uuid/950A-FFE7";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };

@@ -132,7 +132,15 @@ extract() {
   esac
 }
 
+# makes venv in current proj
+mkenv() {
+  python3 -m venv .venv
+  source .venv/bin/activate
+  echo "✔ venv created and activated"
+  [[ -f requirements.txt ]] && pip install -r requirements.txt && echo "✔ requirements installed"
+}
 
+# network shortcuts
 wifi() {
   case "$1" in
     list)    nmcli device wifi list ;;

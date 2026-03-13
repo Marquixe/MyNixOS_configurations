@@ -132,6 +132,19 @@
     autoPrune.enable = true;
   };
 
+  # ── Virtualisation ────────────────────────────────────────────────────────
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu = {
+      package  = pkgs.qemu_kvm;
+      runAsRoot = true;
+      swtpm.enable = true;   # needed for Windows 11 TPM
+    };
+  };
+
+  programs.virt-manager.enable = true;
+  virtualisation.spiceUSBRedirection.enable = true;  # USB passthrough
+
   # ── Wireshark ─────────────────────────────────────────────────────────────
   programs.wireshark.enable = true;
 
@@ -156,6 +169,7 @@
       "video"
       "docker"
       "wireshark"
+      "libvirtd"
     ];
     packages = with pkgs; [
       kdePackages.kate
@@ -258,6 +272,9 @@
     duf
     smartmontools
     nvme-cli
+    gptfdisk
+    efibootmgr
+    parted
     stow               # HAVE THIS BEFORE INSTALL.SH
 
     # ── Hardware & diagnostics ────────────────────────────────────────────
@@ -293,6 +310,12 @@
     direnv
     nix-direnv
     dive
+
+    #  ── Virtualisation ───────────────────────────────────────────────────
+    virt-manager
+    virt-viewer
+    dnsmasq      # needed for VM networking
+    virtiofsd    # folder sharing between host and VM
 
     # ── Fun / info ────────────────────────────────────────────────────────
     fastfetch

@@ -28,9 +28,7 @@ case "$choice" in
 esac
 
 sudo rm -f /etc/nixos/configuration.nix
-#sudo rm -f /etc/nixos/hardware-configuration.nix
-sudo ln -s "$DOTFILES/nixos/configuration.nix" /etc/nixos/configuration.nix
-#sudo ln -s "$DOTFILES/nixos/hardware-configuration.nix" /etc/nixos/hardware-configuration.nix
+sudo ln -s "$DOTFILES/$CONFIG_FILE" /etc/nixos/configuration.nix
 echo "  linked to /etc/nixos/"
 
 echo "── Stowing dotfiles ──────────────────────────────────────"
@@ -43,6 +41,10 @@ for pkg in hypr zsh starship wofi wlogout kitty; do
     echo "  skipped (not found): $pkg"
   fi
 done
+
+mkdir -p ~/Pictures/wallpapers
+cp -r "$DOTFILES/wallpapers/." ~/Pictures/wallpapers/
+
 
 echo ""
 echo "── Done! ─────────────────────────────────────────────────"
