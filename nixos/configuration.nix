@@ -7,7 +7,7 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
+      /etc/nixos/hardware-configuration.nix
     ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -28,9 +28,9 @@
     options   = "--delete-older-than 14d";
   };
 
-  swapDevices = [
-    { device = "/swapfile"; }
-  ];
+  #swapDevices = [
+  #  { device = "/swapfile"; }
+  #];
 
   boot.kernel.sysctl = {
     "vm.swappiness"             = 10;
@@ -201,6 +201,7 @@
     wlogout
     glib
     gtk3
+    adwaita-icon-theme
 
     # ── Fonts ─────────────────────────────────────────────────────────────
     nerd-fonts.jetbrains-mono
