@@ -47,7 +47,7 @@
 
   # ── Networking ────────────────────────────────────────────────────────────
   networking.hostName                    = "thinkpadik";
-  networking.wireless.enable             = false;
+  # networking.wireless.enable             = false;
   networking.networkmanager.enable       = true;
   networking.networkmanager.wifi.backend = "wpa_supplicant";
 

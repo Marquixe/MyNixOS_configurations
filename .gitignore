@@ -1,0 +1,7 @@
+# hardware-configuration.nix is machine-specific — generate locally:
+# sudo nixos-generate-config --show-hardware-config > nixos/hardware-configuration.nix
+nixos/hardware-configuration.nix
+
+# nix build results
+result
+result-*
