@@ -10,6 +10,10 @@
   # ── Conf lins → ~/.config/ ──────────────────────────────────────────────────
 
   xdg.configFile = {
+    # nvim
+    #"nvim".source 		   = ./nvim;
+    "nvim".source          = config.lib.file.mkOutOfStoreSymlink "/home/markie/dotfiles/home/nvim";
+
     # hypr
     "hypr/hyprland.conf".source    = ./hypr/hyprland.conf;
     "hypr/hyprpaper.conf".source   = ./hypr/hyprpaper.conf;
@@ -34,6 +38,7 @@
     # starship
     "starship.toml".source         = ./starship/starship.toml;
   };
+
 
 
   home.file = {
