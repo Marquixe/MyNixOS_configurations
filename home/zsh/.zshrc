@@ -87,11 +87,16 @@ alias du='dust'
 alias ps='procs'
 
 # ── Aliases — NixOS ───────────────────────────────────────────────────────────
-alias nrs='sudo nixos-rebuild switch |& nom'   # rebuild with progress
-alias nrb='sudo nixos-rebuild boot |& nom'     # rebuild, apply on next boot
-alias nrt='sudo nixos-rebuild test |& nom'     # test without making permanent
+alias nrf='sudo nixos-rebuild switch --flake ~/dotfiles#thinkpadik'
+alias nrb='sudo nixos-rebuild boot --flake ~/dotfiles#thinkpadik'
+alias nrt='sudo nixos-rebuild test   --flake ~/dotfiles#thinkpadik |& nom'
+alias nup='nix flake update ~/dotfiles'
+
+# alias nrs='sudo nixos-rebuild switch |& nom'   # rebuild with progress
+# alias nrb='sudo nixos-rebuild boot |& nom'     # rebuild, apply on next boot
+# alias nrt='sudo nixos-rebuild test |& nom'     # test without making permanent
 alias ngc='sudo nix-collect-garbage -d'        # delete old generations
-alias nup='sudo nix flake update'              # update flake inputs
+# alias nup='sudo nix flake update'              # update flake inputs
 alias nsh='nix-shell'                          # drop into a nix shell
 
 # ── Aliases — misc ────────────────────────────────────────────────────────────
