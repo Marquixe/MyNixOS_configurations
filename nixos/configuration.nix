@@ -101,10 +101,34 @@
     LC_TIME           = "sk_SK.UTF-8";
   };
 
+  #services.xserver.enable = true;
+  #services.xserver.xkb = {
+  #  layout  = "us";
+  #  variant = "";
+  #};
+
   services.xserver.enable = true;
   services.xserver.xkb = {
-    layout  = "us";
-    variant = "";
+    layout  = "us,ua";
+    variant = ",";          # empty variant for both
+    options = "grp:alt_shift_toggle";
+  };
+
+  # ThinkPad trackpoint + extra buttons
+  services.libinput.enable = true;
+  hardware.trackpoint = {
+    enable   = true;
+    emulateWheel = true;   # middle button + stick = scroll
+  };
+
+  systemd.services.fix-trackpoint = {
+    description = "Reinitialize input devices after hibernate";
+    wantedBy = [ "post-hibernate.target" ];
+    after = [ "post-hibernate.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.udev}/bin/udevadm trigger --subsystem-match=input";
+    };
   };
 
   # ── Sound ─────────────────────────────────────────────────────────────────
@@ -202,6 +226,9 @@
     glib
     gtk3
     adwaita-icon-theme
+    mako
+    libnotify
+    libinput
 
     # ── Fonts ─────────────────────────────────────────────────────────────
     nerd-fonts.jetbrains-mono
@@ -213,6 +240,9 @@
     neovim
     vscode
     jetbrains.pycharm-oss
+    
+    #
+    xournalpp # lol wtf is this
 
     # ── Terminal & shell ──────────────────────────────────────────────────
     zsh
@@ -320,10 +350,38 @@
 
     # ── Fun / info ────────────────────────────────────────────────────────
     fastfetch
-    cmatrix
-    asciiquarium
-    toilet
-    tty-clock
+
+    # ── Animations ──────────────────────────────────────────────────────── 
+    asciiquarium	# Animated fish tank in your terminal
+    cmatrix		# Classic Matrix falling green code
+    notcurses		# 
+    cbonsai		# Grows a beautiful ASCII bonsai tree
+    aalib		# Animated ASCII fire (very mesmerizing)
+    pipes  		# Flowing animated pipes screensaver
+    sl			# Steam locomotive runs across screen (classic)
+    lavat  		# Animated lava lamp in terminal
+
+    genact		# Simulates compiling kernels, mining crypto
+    #no-more-secrets	# The famous "Sneakers" movie decryption effect
+    hollywood		# Fills your terminal with random hacker-movie nonsense
+    mapscii
+    fortune
+
+    snowmachine
+    gping
+    #bb
+
+    # ── Texts ─────────────────────────────────────────────────────────────
+    tty-clock		# Animated ASCII digital clock
+    toilet		# Like figlet but with color & filters
+    figlet		# Big ASCII text banners, many fonts
+    lolcat		# Rainbow-colorizes any terminal output
+    cowsay		# Talking ASCII cow (or dragon, etc.)
+ 
+    # ── Image/Video ───────────────────────────────────────────────────────
+    jp2a		# Convert images to ASCII art
+    libcaca		# View images/video as colored ASCII (includes cacafire)
+    tplay		# Play video/GIFs/YouTube as ASCII in terminal
 
     # ── Media ─────────────────────────────────────────────────────────────
     spotify
