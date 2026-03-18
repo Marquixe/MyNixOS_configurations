@@ -12,7 +12,7 @@
   xdg.configFile = {
     # nvim
     #"nvim".source 		   = ./nvim;
-    "nvim".source          = config.lib.file.mkOutOfStoreSymlink "/home/markie/dotfiles/home/nvim";
+    #"nvim".source          = config.lib.file.mkOutOfStoreSymlink "/home/markie/dotfiles/home/nvim";
 
     # hypr
     "hypr/hyprland.conf".source    = ./hypr/hyprland.conf;
@@ -40,6 +40,10 @@
   };
 
 
+  home.file.".config/nvim" = {
+    source = config.lib.file.mkOutOfStoreSymlink "/home/markie/dotfiles/home/nvim";
+    recursive = false;
+  };
 
   home.file = {
     ".zshrc".source = ./zsh/.zshrc;
