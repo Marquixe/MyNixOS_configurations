@@ -1,0 +1,17 @@
+anchor=bottom-right
+margin=10
+padding=15
+border-radius=10
+border-size=2
+border-color=#89b4fa
+background-color=#1e1e2ecc
+text-color=#cdd6f4
+width=280
+height=60
+font=Hack Regular 11
+
+[urgency=normal]
+border-color=#89b4fa
+
+[urgency=critical]
+border-color=#f38ba8

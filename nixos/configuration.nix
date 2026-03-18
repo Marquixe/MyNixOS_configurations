@@ -5,10 +5,11 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      /etc/nixos/hardware-configuration.nix
-    ];
+  imports = [
+    # hardware-configuration.nix is machine-specific — generated locally, not in git
+    # on a new machine: sudo nixos-generate-config --show-hardware-config > nixos/hardware-configuration.nix
+    ./hardware-configuration.nix
+  ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
@@ -110,23 +111,23 @@
   services.xserver.enable = true;
   services.xserver.xkb = {
     layout  = "us,ua";
-    variant = ",";          # empty variant for both
+    variant = ",";
     options = "grp:alt_shift_toggle";
   };
 
-  # ThinkPad trackpoint + extra buttons
+  # ── ThinkPad trackpoint ───────────────────────────────────────────────────
   services.libinput.enable = true;
   hardware.trackpoint = {
-    enable   = true;
-    emulateWheel = true;   # middle button + stick = scroll
+    enable       = true;
+    emulateWheel = true;
   };
 
   systemd.services.fix-trackpoint = {
     description = "Reinitialize input devices after hibernate";
-    wantedBy = [ "post-hibernate.target" ];
-    after = [ "post-hibernate.target" ];
+    wantedBy    = [ "post-hibernate.target" ];
+    after       = [ "post-hibernate.target" ];
     serviceConfig = {
-      Type = "oneshot";
+      Type      = "oneshot";
       ExecStart = "${pkgs.udev}/bin/udevadm trigger --subsystem-match=input";
     };
   };
@@ -160,23 +161,22 @@
   virtualisation.libvirtd = {
     enable = true;
     qemu = {
-      package  = pkgs.qemu_kvm;
+      package   = pkgs.qemu_kvm;
       runAsRoot = true;
-      swtpm.enable = true;   # needed for Windows 11 TPM
+      swtpm.enable = true;
     };
   };
 
-  programs.virt-manager.enable = true;
-  virtualisation.spiceUSBRedirection.enable = true;  # USB passthrough
+  programs.virt-manager.enable              = true;
+  virtualisation.spiceUSBRedirection.enable = true;
 
   # ── Wireshark ─────────────────────────────────────────────────────────────
   programs.wireshark.enable = true;
 
-  # ── Default shell → zsh ───────────────────────────────────────────────────
+  # ── Shell & direnv ────────────────────────────────────────────────────────
   programs.zsh.enable    = true;
   users.defaultUserShell = pkgs.zsh;
 
-  # ── direnv ────────────────────────────────────────────────────────────────
   programs.direnv = {
     enable            = true;
     nix-direnv.enable = true;
@@ -195,39 +195,24 @@
       "wireshark"
       "libvirtd"
     ];
-    packages = with pkgs; [
-      kdePackages.kate
-      thunderbird
-    ];
   };
 
   programs.firefox.enable = true;
 
   # ── System packages ───────────────────────────────────────────────────────
+  # Note: user packages live in home/home.nix
+  # Only truly system-level things here (needed before login / for all users)
   environment.systemPackages = with pkgs; [
 
     # ── SDDM theme ────────────────────────────────────────────────────────
     (sddm-astronaut.override { embeddedTheme = "pixel_sakura"; })
 
-    # ── Hyprland ecosystem ────────────────────────────────────────────────
-    kitty
-    wofi
-    hyprpaper
-    hyprlock
-    hypridle
-    grimblast
-    dunst
-    wl-clipboard
+    # ── Hyprland / Wayland system deps ────────────────────────────────────
     xdg-utils
     xdg-desktop-portal-hyprland
-    cliphist
-    brightnessctl
-    wlogout
     glib
     gtk3
     adwaita-icon-theme
-    mako
-    libnotify
     libinput
 
     # ── Fonts ─────────────────────────────────────────────────────────────
@@ -235,157 +220,11 @@
     nerd-fonts.fira-code
     nerd-fonts.hack
 
-    # ── Editors ───────────────────────────────────────────────────────────
-    vim
-    neovim
-    vscode
-    jetbrains.pycharm-oss
-    
-    #
-    xournalpp # lol wtf is this
-
-    # ── Terminal & shell ──────────────────────────────────────────────────
-    zsh
-    starship
-    zoxide
-    fzf
-    bat
-    eza
-    delta
-    tmux
-    yazi
-
-    # ── File & text tools ─────────────────────────────────────────────────
-    ranger
-    tree
-    fd
-    ripgrep
-    sd
-    jq
-    yq
-    unzip
-    zip
-    p7zip
-    rsync
-
-    # ── Git ───────────────────────────────────────────────────────────────
-    git
-    gh
-    lazygit
-
-    # ── Network ───────────────────────────────────────────────────────────
-    wget
-    curl
-    httpie
-    nmap
-    dig
-    whois
-    traceroute
-    mtr
-    bandwhich
-    nethogs
-    nload
-    iftop
-
-    # ── Process & system visibility ───────────────────────────────────────
-    btop
-    htop
-    bottom
-    procs
-    lsof
-    strace
-    ltrace
-    sysstat
-    iotop
-
-    # ── Disk & storage ────────────────────────────────────────────────────
-    dust
-    duf
-    smartmontools
-    nvme-cli
-    gptfdisk
-    efibootmgr
-    parted
-    stow               # HAVE THIS BEFORE INSTALL.SH
-
-    # ── Hardware & diagnostics ────────────────────────────────────────────
-    pciutils
-    usbutils
-    dmidecode
-    powertop
-    acpi
-    stress-ng
-
-    # ── Log & error visibility ────────────────────────────────────────────
-    lnav
-    grc
-    multitail
-
-    # ── Build progress ────────────────────────────────────────────────────
-    nix-output-monitor
-    pv
-    progress
-
-    # ── Nix helpers ───────────────────────────────────────────────────────
-    nix-tree
-    nix-du
-    nvd
-    nh
-
-    # ── Dev tools ─────────────────────────────────────────────────────────
-    gnumake
-    gcc
-    python3
-    nodejs
-    docker-compose
-    direnv
-    nix-direnv
-    dive
-
-    #  ── Virtualisation ───────────────────────────────────────────────────
+    # ── Virtualisation ────────────────────────────────────────────────────
     virt-manager
     virt-viewer
-    dnsmasq      # needed for VM networking
-    virtiofsd    # folder sharing between host and VM
-
-    # ── Fun / info ────────────────────────────────────────────────────────
-    fastfetch
-
-    # ── Animations ──────────────────────────────────────────────────────── 
-    asciiquarium	# Animated fish tank in your terminal
-    cmatrix		# Classic Matrix falling green code
-    notcurses		# 
-    cbonsai		# Grows a beautiful ASCII bonsai tree
-    aalib		# Animated ASCII fire (very mesmerizing)
-    pipes  		# Flowing animated pipes screensaver
-    sl			# Steam locomotive runs across screen (classic)
-    lavat  		# Animated lava lamp in terminal
-
-    genact		# Simulates compiling kernels, mining crypto
-    #no-more-secrets	# The famous "Sneakers" movie decryption effect
-    hollywood		# Fills your terminal with random hacker-movie nonsense
-    mapscii
-    fortune
-
-    snowmachine
-    gping
-    #bb
-
-    # ── Texts ─────────────────────────────────────────────────────────────
-    tty-clock		# Animated ASCII digital clock
-    toilet		# Like figlet but with color & filters
-    figlet		# Big ASCII text banners, many fonts
-    lolcat		# Rainbow-colorizes any terminal output
-    cowsay		# Talking ASCII cow (or dragon, etc.)
- 
-    # ── Image/Video ───────────────────────────────────────────────────────
-    jp2a		# Convert images to ASCII art
-    libcaca		# View images/video as colored ASCII (includes cacafire)
-    tplay		# Play video/GIFs/YouTube as ASCII in terminal
-
-    # ── Media ─────────────────────────────────────────────────────────────
-    spotify
-
+    dnsmasq
+    virtiofsd
   ];
 
   system.stateVersion = "25.11";
