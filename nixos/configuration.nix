@@ -198,6 +198,15 @@
   };
 
   programs.firefox.enable = true;
+  programs.steam.enable = true;
+  home-manager.backupFileExtension = "backup";
+
+  
+  # home.nix or configuration.nix
+  environment.variables = {
+    NPM_CONFIG_PREFIX = "$HOME/.npm-global";
+  };
+
 
   # ── System packages ───────────────────────────────────────────────────────
   # Note: user packages live in home/home.nix

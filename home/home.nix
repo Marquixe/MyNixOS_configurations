@@ -75,6 +75,10 @@
     vscode
     jetbrains.pycharm-oss
     xournalpp
+    nodejs
+
+
+    ollama
 
     # ── Terminal & shell ──────────────────────────────────────────────────
     zsh
