@@ -3,7 +3,7 @@
 ACTION=$1
 
 case "$ACTION" in
-up) wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ ;;
+up) wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+ ;;
 down) wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- ;;
 mute) wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle ;;
 esac
@@ -24,6 +24,6 @@ else
 fi
 
 notify-send -t 1500 \
-    -h string:synchronize:volume \
-    "$ICON Volume  ${PERCENT}%" \
-    "$BAR"
+    --app-name=volume \
+    \
+    "$ICON ${PERCENT}%  ${BAR}" #-h string:synchronize:volume \
