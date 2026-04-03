@@ -25,6 +25,7 @@
     # mako
     "mako/config".source           = ./mako/config;
     "mako/battery-notify.sh"       = { source = ./mako/battery-notify.sh; executable = true; };
+    "mako/vol.sh"                  = { source = ./mako/vol.sh; executable = true; };
 
     # kitty
     "kitty/kitty.conf".source      = ./kitty/kitty.conf;
