@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-ACTION=$1 # "up", "down", or "mute"
+ACTION=$1
 
 case "$ACTION" in
 up) wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ ;;
@@ -9,8 +9,7 @@ mute) wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle ;;
 esac
 
 RAW=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
-FLOAT=$(echo "$RAW" | grep -oP '[\d.]+')
-PERCENT=$((${FLOAT/./} * 100 / 100))
+PERCENT=$(echo "$RAW" | awk '{printf "%d", $2 * 100}')
 MUTED=$(echo "$RAW" | grep -c "MUTED")
 
 BAR_FILLED=$((PERCENT / 5))
@@ -25,6 +24,6 @@ else
 fi
 
 notify-send -t 1500 \
-    -h string:x-canonical-app-name:volume \
+    -h string:synchronize:volume \
     "$ICON Volume  ${PERCENT}%" \
     "$BAR"

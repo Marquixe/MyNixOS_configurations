@@ -19,3 +19,5 @@ border-color=#f38ba8
 [app-name=volume]
 anchor=bottom-center
 margin=0,0,40,0
+default-timeout=1500
+group-by=app-name
