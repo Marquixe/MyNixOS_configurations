@@ -22,3 +22,10 @@ margin=0,0,40,0
 default-timeout=1500
 group-by=app-name
 width=350
+
+[app-name=brightness]
+anchor=bottom-center
+margin=0,0,40,0
+default-timeout=1500
+group-by=app-name
+width=380
