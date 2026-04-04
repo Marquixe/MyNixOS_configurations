@@ -1,0 +1,78 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+[╭─](bold red)$os$username$hostname$directory$git_branch$git_status$python$nodejs$rust$nix_shell$custom.dev_shell$cmd_duration
+[╰───](bold red)$character"""
+
+[character]
+success_symbol = '[❯](bold red)'
+error_symbol   = '[❯](bold bright-red)'
+
+[os]
+disabled = false
+style = 'bold red'
+
+[os.symbols]
+NixOS = '❄ '
+
+[username]
+show_always = true
+style_user  = 'bold bright-red'
+style_root  = 'bold red'
+format      = '[$user]($style)'
+
+[hostname]
+ssh_only = false
+style    = 'bold yellow'
+format   = '[@$hostname]($style) '
+
+[directory]
+style             = 'bold #ff6b6b'
+truncation_length = 4
+truncate_to_repo  = true
+format            = 'in [$path]($style)[$read_only]($read_only_style) '
+
+[git_branch]
+symbol = ' '
+style  = 'bold red'
+format = 'on [$symbol$branch]($style) '
+
+[git_status]
+style     = 'bold #ff5555'
+format    = '([$all_status$ahead_behind]($style) )'
+ahead     = '⇡${count}'
+behind    = '⇣${count}'
+modified  = '!${count}'
+untracked = '?${count}'
+staged    = '+${count}'
+
+[python]
+symbol = 'py '
+style  = 'bold yellow'
+format = 'via [$symbol$version]($style) '
+
+[nodejs]
+symbol = 'js '
+style  = 'bold #ff6b6b'
+format = 'via [$symbol$version]($style) '
+
+[rust]
+symbol = 'rs '
+style  = 'bold red'
+format = 'via [$symbol$version]($style) '
+
+[nix_shell]
+symbol = '❄ '
+style  = 'bold bright-red'
+format = 'via [$symbol$state]($style) '
+
+[cmd_duration]
+min_time           = 2000
+style              = 'bold yellow'
+format             = 'took [$duration]($style) '
+show_notifications = true
+
+[custom.dev_shell]
+command = 'printf "%s" "$DEV_SHELL_NAME"'
+when = '[ -n "$DEV_SHELL_NAME" ]'
+format = 'with [<$output>](bold #ff4444) '

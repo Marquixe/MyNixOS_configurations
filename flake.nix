@@ -10,24 +10,34 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager }: {
-
-    nixosConfigurations.thinkpadik = nixpkgs.lib.nixosSystem {
+  outputs = { self, nixpkgs, home-manager }:
+    let
       system = "x86_64-linux";
-      modules = [
-        ./nixos/configuration.nix
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+    in {
+      nixosConfigurations.thinkpadik = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          ./nixos/configuration.nix
 
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs   = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.markie    = import ./home/home.nix;
-        }
-      ];
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.markie = import ./home/home.nix;
+          }
+        ];
+      };
+
+      devShells.${system} = {
+        python = import ./shells/python.nix { inherit pkgs; };
+        java = import ./shells/java.nix { inherit pkgs; };
+      };
+
+      # якщо колись додаси мінімальну конфігурацію для іншої машини:
+      # nixosConfigurations.minimalbox = nixpkgs.lib.nixosSystem { ... };
     };
-
-    # якщо колись додаси мінімальну конфігурацію для іншої машини:
-    # nixosConfigurations.minimalbox = nixpkgs.lib.nixosSystem { ... };
-
-  };
 }

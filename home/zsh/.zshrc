@@ -137,13 +137,78 @@ extract() {
   esac
 }
 
-# makes venv in current proj
-mkenv() {
-  python3 -m venv .venv
-  source .venv/bin/activate
-  echo "✔ venv created and activated"
-  [[ -f requirements.txt ]] && pip install -r requirements.txt && echo "✔ requirements installed"
+
+# ENVS 
+
+
+# enter nix dev shells from dotfiles repo
+devshell() {
+  local shell="$1"
+  local repo="$HOME/dotfiles"
+
+  if [[ -z "$shell" ]]; then
+    echo "Usage: devshell <shell>"
+    return 1
+  fi
+
+  nix develop "$repo#$shell" -c zsh
 }
+
+# make python venw
+mkenv() {
+  if [[ -d .venv ]]; then
+    echo ".venv already exists"
+    return 0
+  fi
+
+  command -v python >/dev/null || {
+    echo "Python not found (are you in nix shell?)"
+    return 1
+  }
+
+  python -m venv .venv || return 1
+  source .venv/bin/activate || return 1
+
+  python -m pip install --upgrade pip
+
+  if [[ -f requirements.txt ]]; then
+    pip install -r requirements.txt
+    echo "requirements installed"
+  fi
+
+  echo "venv ready"
+}
+
+# setup project fast
+pysetup() {
+  nd python || return 1
+  mkenv
+}
+
+# auto activate/deactivate python venv
+autoenv() {
+  local dir="$PWD"
+
+  while [[ "$dir" != "/" ]]; do
+    if [[ -f "$dir/.venv/bin/activate" ]]; then
+      source "$dir/.venv/bin/activate"
+      return
+    fi
+    dir=$(dirname "$dir")
+  done
+
+  if [[ -n "$VIRTUAL_ENV" ]]; then
+    deactivate 2>/dev/null
+  fi
+}
+
+# run on every directory change
+autoload -U add-zsh-hook
+add-zsh-hook chpwd autoenv
+
+# also run once when shell starts
+autoenv
+
 
 # network shortcuts
 wifi() {
@@ -179,5 +244,6 @@ sysinfo() {
   echo ""
 }
   
-sysinfo
-
+if [[ -z "$DEV_SHELL_NAME" ]]; then
+  sysinfo
+fi

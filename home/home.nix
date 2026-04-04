@@ -37,7 +37,9 @@
     "wlogout/style.css".source     = ./wlogout/style.css;
 
     # starship
-    "starship.toml".source         = ./starship/starship.toml;
+    "starship.toml".source              = ./starship/starship.toml; 
+    "starship-python.toml".source       = ./starship/starship-python.toml;
+    "starship-java.toml".source         = ./starship/starship-java.toml;
   };
 
 
@@ -104,6 +106,8 @@
     zip
     p7zip
     rsync
+
+    gnupg
 
     # ── Git ───────────────────────────────────────────────────────────────
     git
