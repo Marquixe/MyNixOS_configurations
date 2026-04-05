@@ -79,6 +79,14 @@
     jetbrains.pycharm-oss
     xournalpp
     nodejs
+    tree-sitter
+
+    clang-tools
+    pyright
+    ruff
+    jdt-language-server
+    jdk
+    lua-language-server
 
 
     ollama
