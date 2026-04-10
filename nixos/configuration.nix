@@ -175,6 +175,7 @@
 
   # ── Shell & direnv ────────────────────────────────────────────────────────
   programs.zsh.enable    = true;
+  programs.nix-ld.enable = true;
   users.defaultUserShell = pkgs.zsh;
 
   programs.direnv = {

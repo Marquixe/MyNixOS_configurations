@@ -6,6 +6,19 @@
   home.stateVersion  = "25.11";
 
   programs.home-manager.enable = true;
+  programs.zsh = {
+    enable = true;
+
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+    enableCompletion = true;
+
+    initContent = builtins.readFile ./zsh/.zshrc;
+  };
+  programs.atuin = {
+    enable = true;
+    enableZshIntegration = true;
+  };
 
   # ── Conf lins → ~/.config/ ──────────────────────────────────────────────────
 
@@ -50,7 +63,7 @@
   };
 
   home.file = {
-    ".zshrc".source = ./zsh/.zshrc;
+    #".zshrc".source = ./zsh/.zshrc;
     "Pictures/wallpapers/mi_background.jpg".source = ../wallpapers/mi_background.jpg;
   };
 
@@ -103,6 +116,7 @@
     delta
     tmux
     yazi
+    atuin
 
     # ── File & text tools ─────────────────────────────────────────────────
     ranger
