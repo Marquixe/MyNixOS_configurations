@@ -18,9 +18,10 @@
     "hypr/hyprland.conf".source    = ./hypr/hyprland.conf;
     "hypr/hyprpaper.conf".source   = ./hypr/hyprpaper.conf;
     #hypr hud
-    "hypr/hud.sh"       = { source = ./hypr/hud.sh;       executable = true; };
-    "hypr/hud-date.sh"  = { source = ./hypr/hud-date.sh;  executable = true; };
-    "hypr/hud-stats.sh" = { source = ./hypr/hud-stats.sh; executable = true; };
+    "hypr/hud.sh"         = { source = ./hypr/hud.sh;         executable = true; };
+    "hypr/hud-date.sh"    = { source = ./hypr/hud-date.sh;    executable = true; };
+    "hypr/hud-stats.sh"   = { source = ./hypr/hud-stats.sh;   executable = true; };
+    "hypr/hud-updates.sh" = { source = ./hypr/hud-updates.sh; executable = true; };
 
     # mako
     "mako/config".source           = ./mako/config;
@@ -90,6 +91,7 @@
 
 
     ollama
+    claude-code
 
     # ── Terminal & shell ──────────────────────────────────────────────────
     zsh
@@ -114,8 +116,9 @@
     zip
     p7zip
     rsync
-
     gnupg
+
+    zathura
 
     # ── Git ───────────────────────────────────────────────────────────────
     git

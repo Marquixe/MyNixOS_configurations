@@ -4,7 +4,7 @@ return {
     opts = {
       servers = {
         clangd = {
-          cmd = { "clangd" },
+          cmd = { "/etc/profiles/per-user/markie/bin/clangd" },
         },
         pyright = {
           cmd = { "pyright-langserver", "--stdio" },
