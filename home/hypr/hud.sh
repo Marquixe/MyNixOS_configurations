@@ -25,9 +25,12 @@ STATS_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$DATE_PANE" -v -l 65 "bas
 #ANIM_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$STATS_PANE" -v -l 45 "$PICK")
 
 if [[ "$PICK" == "cbonsai -l -i --life=46 --time=0,001" ]]; then
-    ANIM_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$STATS_PANE" -v -l 45 "sleep 1; $PICK -s $RANDOM")
-    tmux split-window -d -t "$ANIM_PANE" -h -b -p 33 "sleep 1; $PICK -s $((RANDOM + 23))"
-    tmux split-window -d -t "$ANIM_PANE" -h -p 50 "sleep 1; $PICK -s $((RANDOM + 455))"
+    S1=$((RANDOM + 903))
+    S2=$((RANDOM + 234))
+    S3=$((RANDOM + 653))
+    ANIM_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$STATS_PANE" -v -l 45 "sleep 1; $PICK -s $S1 --wait=3.07")
+    tmux split-window -d -t "$ANIM_PANE" -h -b -p 33 "sleep 1; $PICK -s $S2 --wait=3.33"
+    tmux split-window -d -t "$ANIM_PANE" -h -p 50 "sleep 1; $PICK -s $S3 --wait=3.71"
 else
     tmux split-window -d -t "$STATS_PANE" -v -l 45 "$PICK"
 fi
