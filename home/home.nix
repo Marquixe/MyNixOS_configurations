@@ -15,13 +15,26 @@
 
     initContent = builtins.readFile ./zsh/.zshrc;
   };
+
   programs.atuin = {
     enable = true;
     enableZshIntegration = true;
   };
 
-  # ── Conf lins → ~/.config/ ──────────────────────────────────────────────────
+  programs.zathura = {
+    enable = true;
+    options = {
+        recolor = "true";
+        # "recolor-lightcolor" = "#ebdbb2"; # warm paper bg
+        # "recolor-darkcolor" = "#282828";  # warm paper fg
+        "recolor-lightcolor" = "#1e1e2e";
+        "recolor-darkcolor" = "#cdd6f4";
+        "recolor-keephue" = "false";
+    };
+  };
 
+
+  # ── Conf lins → ~/.config/ ──────────────────────────────────────────────────
   xdg.configFile = {
     # nvim
     #"nvim".source 		   = ./nvim;
@@ -132,7 +145,7 @@
     rsync
     gnupg
 
-    zathura
+    # zathura
 
     # ── Git ───────────────────────────────────────────────────────────────
     git
