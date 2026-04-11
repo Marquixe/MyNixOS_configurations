@@ -144,6 +144,7 @@
     p7zip
     rsync
     gnupg
+    imv
 
     # zathura
 
