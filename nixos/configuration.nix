@@ -214,7 +214,8 @@
     environment.systemPackages = with pkgs; [
 
         # ── SDDM theme ───────────────────────────────────────────────────────────────────────────
-        (sddm-astronaut.override { embeddedTheme = "pixel_sakura"; })
+        (sddm-astronaut.override { embeddedTheme = "purple_leaves"; })
+        #(sddm-astronaut.override { embeddedTheme = "pixel_sakura"; })
 
         # ── Hyprland / Wayland system deps ───────────────────────────────────────────────────────
         xdg-utils
