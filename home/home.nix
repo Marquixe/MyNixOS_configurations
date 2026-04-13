@@ -145,6 +145,9 @@
         yazi
         atuin
 
+        wine
+        winetricks
+
         # ── File & text tools ────────────────────────────────────────────────────────────────────
         ranger
         tree
