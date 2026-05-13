@@ -51,11 +51,17 @@
     networking.networkmanager.enable       = true;
     networking.networkmanager.wifi.backend = "wpa_supplicant";
 
+    services.tailscale.enable = true;
+
     # ── Firewall ─────────────────────────────────────────────────────────────────────────────────
     networking.firewall = {
         enable                = true;
         logRefusedConnections = true;
+        allowedUDPPorts = [ 41641 ];
+        checkReversePath = "loose";
     };
+
+
 
     # ── Core services ────────────────────────────────────────────────────────────────────────────
     programs.kdeconnect.enable          = true;
@@ -143,6 +149,10 @@
     };
 
     services.printing.enable = true;
+
+    hardware.bluetooth.enable = true;
+    hardware.bluetooth.powerOnBoot = true;
+    services.blueman.enable = true;
 
     # ── Journal tuning ───────────────────────────────────────────────────────────────────────────
     services.journald.extraConfig = ''

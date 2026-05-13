@@ -5,3 +5,6 @@ nixos/hardware-configuration.nix
 # nix build results
 result
 result-*
+
+
+*.env
