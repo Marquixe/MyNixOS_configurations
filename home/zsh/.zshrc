@@ -229,6 +229,18 @@ wifi() {
   esac
 }
 
+# copytree — copy project tree to clipboard
+# Usage: copytree [eza flags...]
+# Examples:
+#   copytree
+#   copytree -a
+#   copytree -a -I .git
+#   copytree --level=5
+copytree() {
+  eza --icons=never --tree --group-directories-first "$@" | wl-copy
+  echo "copied"
+}
+
 # fcd — fuzzy cd into any subdirectory
 fcd() { cd "$(fd --type d | fzf --preview 'eza --tree --level=1 {}')" }
 
