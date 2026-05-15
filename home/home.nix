@@ -62,6 +62,9 @@
         "hypr/hud-stats.sh"   = { source = ./hypr/hud-stats.sh;   executable = true; };
         "hypr/hud-updates.sh" = { source = ./hypr/hud-updates.sh; executable = true; };
 
+        "hypr/spotify-player.sh" = { source = ./hypr/spotify-player.sh; executable = true; };
+        "hypr/toggle-player.sh"  = { source = ./hypr/toggle-player.sh;  executable = true; };
+
         # mako
         "mako/config".source           = ./mako/config;
         "mako/battery-notify.sh"       = { source = ./mako/battery-notify.sh; executable = true; };
@@ -185,6 +188,7 @@
         iftop
 
         # ── Process & system visibility ──────────────────────────────────────────────────────────
+        bc
         btop
         htop
         bottom
@@ -263,6 +267,7 @@
 
         # ── Music ────────────────────────────────────────────────────────────────────────────────
         spotify
+        playerctl
 
         # ── KDE apps ─────────────────────────────────────────────────────────────────────────────
         kdePackages.kate
