@@ -20,13 +20,13 @@ map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move line up" })
 map({ "n", "i" }, "<C-s>", "<cmd>w<CR><Esc>", { desc = "Save file" })
 
 -- ── Буфери ─────────────────────────────────────────────────────────────────
-map("n", "<S-l>", "<cmd>bnext<CR>",     { desc = "Next buffer" })
+map("n", "<S-l>", "<cmd>bnext<CR>", { desc = "Next buffer" })
 map("n", "<S-h>", "<cmd>bprevious<CR>", { desc = "Prev buffer" })
 
 -- ── Terminal ───────────────────────────────────────────────────────────────
 map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- ── Quickfix ───────────────────────────────────────────────────────────────
-map("n", "<leader>qo", "<cmd>copen<CR>",  { desc = "Open quickfix" })
-map("n", "<leader>qn", "<cmd>cnext<CR>",  { desc = "Next quickfix" })
-map("n", "<leader>qp", "<cmd>cprev<CR>",  { desc = "Prev quickfix" })
+map("n", "<leader>qo", "<cmd>copen<CR>", { desc = "Open quickfix" })
+map("n", "<leader>qn", "<cmd>cnext<CR>", { desc = "Next quickfix" })
+map("n", "<leader>qp", "<cmd>cprev<CR>", { desc = "Prev quickfix" })

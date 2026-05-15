@@ -3,22 +3,21 @@
 
 return {
 
-  -- ── Тема ───────────────────────────────────────────────────────────────
-  -- LazyVim за замовчуванням використовує tokyonight
-  -- Catppuccin добре виглядає з твоїм Hyprland:
-  -- {
-  --   "catppuccin/nvim",
-  --   name     = "catppuccin",
-  --   priority = 1000,
-  --   opts     = { flavour = "mocha" },
-  -- },
+	-- ── Тема ───────────────────────────────────────────────────────────────
+	-- LazyVim за замовчуванням використовує tokyonight
+	-- Catppuccin добре виглядає з твоїм Hyprland:
+	-- {
+	--   "catppuccin/nvim",
+	--   name     = "catppuccin",
+	--   priority = 1000,
+	--   opts     = { flavour = "mocha" },
+	-- },
 
-  -- ── Приклади плагінів які можеш розкоментувати ─────────────────────────
+	-- ── Приклади плагінів які можеш розкоментувати ─────────────────────────
 
-  -- zen mode — фокус на одному файлі
-  -- { "folke/zen-mode.nvim", cmd = "ZenMode" },
+	-- zen mode — фокус на одному файлі
+	-- { "folke/zen-mode.nvim", cmd = "ZenMode" },
 
-  -- markdown preview в браузері
-  -- { "iamcco/markdown-preview.nvim", ft = "markdown" },
-
+	-- markdown preview в браузері
+	-- { "iamcco/markdown-preview.nvim", ft = "markdown" },
 }
