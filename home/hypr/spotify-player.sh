@@ -1,47 +1,39 @@
 #!/usr/bin/env bash
 
-hide_player() {
-    hyprctl dispatch togglespecialworkspace spotify-player
-}
+PLAYER="--player=spotify"
 
 while true; do
-    STATUS=$(playerctl status 2>/dev/null)
+    STATUS=$(playerctl $PLAYER status 2>/dev/null)
 
-    if [[ "$STATUS" == "" ]]; then
+    if [[ -z "$STATUS" ]]; then
         clear
-        echo ""
-        echo "  󰓇  spotify offline"
-        echo ""
+        printf "\n  spotify offline\n\n  waiting...\n"
         sleep 3
         continue
     fi
 
-    TITLE=$(playerctl metadata title 2>/dev/null | cut -c1-30)
-    ARTIST=$(playerctl metadata artist 2>/dev/null | cut -c1-25)
-    ALBUM=$(playerctl metadata album 2>/dev/null | cut -c1-25)
+    TITLE=$(playerctl $PLAYER metadata title 2>/dev/null | cut -c1-35)
+    ARTIST=$(playerctl $PLAYER metadata artist 2>/dev/null | cut -c1-30)
 
-    POSITION=$(playerctl position 2>/dev/null)
-    DURATION=$(playerctl metadata mpris:length 2>/dev/null)
+    POSITION=$(playerctl $PLAYER position 2>/dev/null)
+    DURATION=$(playerctl $PLAYER metadata mpris:length 2>/dev/null)
 
-    # convert microseconds to seconds
-    DUR_SEC=$(echo "$DURATION / 1000000" | bc 2>/dev/null)
+    DUR_SEC=$((DURATION / 1000000))
     POS_INT=${POSITION%.*}
 
-    # format time
-    fmt_time() {
-        printf "%d:%02d" $(($1 / 60)) $(($1 % 60))
-    }
+    fmt_time() { printf "%d:%02d" $(($1 / 60)) $(($1 % 60)); }
 
     POS_FMT=$(fmt_time $POS_INT)
     DUR_FMT=$(fmt_time $DUR_SEC)
 
-    # progress bar
-    BAR_WIDTH=24
+    BAR_WIDTH=30
+
     if [[ $DUR_SEC -gt 0 ]]; then
         FILLED=$((POS_INT * BAR_WIDTH / DUR_SEC))
     else
         FILLED=0
     fi
+
     BAR=""
     for ((i = 0; i < BAR_WIDTH; i++)); do
         if [[ $i -lt $FILLED ]]; then
@@ -53,42 +45,88 @@ while true; do
         fi
     done
 
+    SHUFFLE=$(playerctl $PLAYER shuffle 2>/dev/null)
+    LOOP=$(playerctl $PLAYER loop 2>/dev/null)
+
+    [[ "$SHUFFLE" == "On" ]] && SH="⤮ ON " || SH="⤮ OFF"
+
+    #↻⟳⟲
+    case "$LOOP" in
+    "None") LOOP_STATE="↻ OFF" ;;
+    "Playlist") LOOP_STATE="↻ ALL" ;;
+    "Track") LOOP_STATE="↻ ONE" ;;
+    *) LOOP_STATE="↻ OFF" ;;
+    esac
+
+    # play state icon
     if [[ "$STATUS" == "Playing" ]]; then
-        ICON=""
+        PLAY_ICON="⏸"
     else
-        ICON=""
+        PLAY_ICON="▶"
     fi
 
-    SHUFFLE=$(playerctl shuffle 2>/dev/null)
-    LOOP=$(playerctl loop 2>/dev/null)
-    [[ "$SHUFFLE" == "On" ]] && SH_ICON="󰒟" || SH_ICON="󰒞"
-    [[ "$LOOP" == "Track" ]] && LP_ICON="󰑘" || LP_ICON="󰑖"
-
     clear
-    echo ""
-    printf "  󰓇  %-30s\n" "$TITLE"
-    printf "      %-25s\n" "$ARTIST"
-    [[ -n "$ALBUM" ]] && printf "      %-25s\n" "$ALBUM"
-    echo ""
-    printf "   %s  %s  %s\n" "$POS_FMT" "$BAR" "$DUR_FMT"
-    echo ""
-    printf "   %s    %s   %s   ⏮    %s   ⏭\n" "$SH_ICON" "$LP_ICON" "$ICON"
-    echo ""
-    printf "   [q]uit  [space] play/pause  [n]ext  [p]rev\n"
-    echo ""
 
-    # non-blocking input
-    read -t 1 -s -k 1 KEY 2>/dev/null
-    case "$KEY" in
-    " ") playerctl play-pause ;;
-    "n") playerctl next ;;
-    "p") playerctl previous ;;
-    "s") playerctl shuffle toggle ;;
-    "l") playerctl loop toggle ;; # none→track→playlist
-    "q")
-        hide_player
-        break
-        ;;
-    esac
+    # ─────────────────────────
+    # TITLE / ARTIST
+    # ─────────────────────────
+    printf "\n"
+    printf "  %-40s\n" "$TITLE"
+    printf "  %-40s\n" "$ARTIST"
+
+    # ─────────────────────────
+    # PROGRESS BAR
+    # ─────────────────────────
+    printf "\n"
+    printf "  %s  %s  %s\n" "$POS_FMT" "$BAR" "$DUR_FMT"
+
+    # ─────────────────────────
+    # TOP CONTROLS (ICONS ONLY)
+    # ─────────────────────────
+    printf "\n"
+    printf "  %s      ⏮         %s         ⏭      %s\n" "$SH" "$PLAY_ICON" "$LOOP_STATE"
+    # printf "\n"
+
+    # ─────────────────────────
+    # SECOND ROW (MODES)
+    # ─────────────────────────
+    # printf "       %s        %s\n" "$SH" "$LOOP_STATE"
+
+    # # ─────────────────────────
+    # # HELP LINE
+    # # ─────────────────────────
+    # printf "\n"
+    # printf "   m=play/pause  ←/→=seek  s=shuffle  l=loop  q=quit\n"
+    # printf "\n"
+
+    # ─────────────────────────
+    # INPUT
+    # ─────────────────────────
+    if read -rsn1 -t 0.2 KEY 2>/dev/tty; then
+        if [[ "$KEY" == $'\e' ]]; then
+            read -rsn2 -t 0.1 KEY2
+            KEY+="$KEY2"
+        fi
+
+        case "$KEY" in
+        "m") playerctl $PLAYER play-pause ;;
+        $'\e[C') playerctl $PLAYER next ;;
+        $'\e[D') playerctl $PLAYER previous ;;
+        "s") playerctl $PLAYER shuffle toggle ;;
+        "l")
+            LOOP=$(playerctl $PLAYER loop 2>/dev/null)
+            case "$LOOP" in
+            "None") playerctl $PLAYER loop Playlist ;;
+            "Playlist") playerctl $PLAYER loop Track ;;
+            "Track") playerctl $PLAYER loop None ;;
+            *) playerctl $PLAYER loop None ;;
+            esac
+            ;;
+        "q")
+            hyprctl dispatch togglespecialworkspace spotify-player
+            break
+            ;;
+        esac
+    fi
 
 done
