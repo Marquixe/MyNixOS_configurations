@@ -65,16 +65,23 @@
         "hypr/spotify-player.sh" = { source = ./hypr/spotify-player.sh; executable = true; };
         "hypr/toggle-player.sh"  = { source = ./hypr/toggle-player.sh;  executable = true; };
 
+        # "hypr/ask-claude.sh"  = { source = ./hypr/ask-claude.sh;  executable = true; };
+        # "hypr/ask-claude.py"  = { source = ./hypr/ask-claude.py;  executable = true; };
+
         # mako
         "mako/config".source           = ./mako/config;
         "mako/battery-notify.sh"       = { source = ./mako/battery-notify.sh; executable = true; };
         "mako/vol.sh"                  = { source = ./mako/vol.sh; executable = true; };
+        "mako/brightness.sh"           = { source = ./mako/brightness.sh; executable = true; };
 
         # kitty
         "kitty/kitty.conf".source      = ./kitty/kitty.conf;
 
         # wofi
         "wofi/style.css".source        = ./wofi/style.css;
+
+        # clipse
+        "clipse/config.json".source    = ./clipse/config.json;
 
         # wlogout
         "wlogout/style.css".source     = ./wlogout/style.css;
@@ -107,9 +114,10 @@
         hyprlock
         hypridle
         grimblast
-        dunst
         wl-clipboard
         cliphist
+        clipse
+        chafa
         brightnessctl
         wlogout
         mako
@@ -121,7 +129,6 @@
         vscode
         jetbrains.pycharm-oss
         xournalpp
-        nodejs
         tree-sitter
 
         # ── Editor tools ─────────────────────────────────────────────────────────────────────────
@@ -137,7 +144,7 @@
         claude-code
 
         # ── Terminal & shell ─────────────────────────────────────────────────────────────────────
-        zsh
+        # zsh
         starship
         zoxide
         fzf
@@ -146,10 +153,15 @@
         delta
         tmux
         yazi
-        atuin
-
+        # atuin
         wine
         winetricks
+
+
+        # ── Remote desktop ───────────────────────────────────────────────────────────────────────
+        moonlight-qt
+        cifs-utils
+        samba
 
         # ── File & text tools ────────────────────────────────────────────────────────────────────
         ranger
@@ -238,8 +250,8 @@
         python3
         nodejs
         docker-compose
-        direnv
-        nix-direnv
+        # direnv
+        # nix-direnv
         dive
 
         # ── Fun / terminal art ───────────────────────────────────────────────────────────────────
