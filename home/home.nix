@@ -64,6 +64,7 @@
 
         "hypr/spotify-player.sh" = { source = ./hypr/spotify-player.sh; executable = true; };
         "hypr/toggle-player.sh"  = { source = ./hypr/toggle-player.sh;  executable = true; };
+        "hypr/wifi.sh"           = { source = ./hypr/wifi.sh;           executable = true; };
 
         # "hypr/ask-claude.sh"  = { source = ./hypr/ask-claude.sh;  executable = true; };
         # "hypr/ask-claude.py"  = { source = ./hypr/ask-claude.py;  executable = true; };
