@@ -5,6 +5,8 @@
     home.homeDirectory = "/home/markie";
     home.stateVersion  = "25.11";
 
+    home.sessionPath = [ "$HOME/.local/bin" ];
+
 
     # ── PROGRAMS ─────────────────────────────────────────────────────────────────────────────────
     programs.home-manager.enable = true;
@@ -74,6 +76,7 @@
         "mako/battery-notify.sh"       = { source = ./mako/battery-notify.sh; executable = true; };
         "mako/vol.sh"                  = { source = ./mako/vol.sh; executable = true; };
         "mako/brightness.sh"           = { source = ./mako/brightness.sh; executable = true; };
+        "mako/set-alarm.sh"            = { source = ./mako/set-alarm.sh; executable = true; };
 
         # kitty
         "kitty/kitty.conf".source      = ./kitty/kitty.conf;
@@ -102,6 +105,11 @@
     home.file = {
         #".zshrc".source = ./zsh/.zshrc;
         "Pictures/wallpapers/mi_background.jpg".source = ../wallpapers/mi_background.jpg;
+
+        ".local/bin/alarm" = {
+            source     = ./mako/set-alarm.sh;
+            executable = true;
+        };
     };
 
 
@@ -277,6 +285,10 @@
         jp2a
         libcaca
         tplay
+
+
+        discord
+        blender
 
         # ── Music ────────────────────────────────────────────────────────────────────────────────
         spotify
