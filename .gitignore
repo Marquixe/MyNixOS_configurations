@@ -6,5 +6,9 @@ nixos/hardware-configuration.nix
 result
 result-*
 
-
 *.env
+
+
+home/hypr/ask-claude.py
+home/hypr/ask-claude.sh
+home/hypr/claude-overlay.py

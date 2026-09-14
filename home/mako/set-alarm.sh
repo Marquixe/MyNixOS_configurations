@@ -29,6 +29,6 @@ systemd-run --user \
     "$TIMER_OPT" \
     --unit="alarm-$(date +%s%N)" \
     --description="alarm: ${MSG}" \
-    notify-send -u critical -a "Alarm" "⏰" "$MSG"
+    notify-send -u critical -a "Alarm" "$MSG"
 
 echo "Time set: ${TIME} → ${MSG}"

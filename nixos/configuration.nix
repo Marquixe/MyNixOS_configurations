@@ -50,6 +50,7 @@
     # networking.wireless.enable             = false;
     networking.networkmanager.enable       = true;
     networking.networkmanager.wifi.backend = "wpa_supplicant";
+    # networking.networkmanager.wifi.powersave = false;
 
     services.tailscale.enable = true;
 
@@ -234,6 +235,7 @@
         gtk3
         adwaita-icon-theme
         libinput
+        iw
 
         # ── Fonts ────────────────────────────────────────────────────────────────────────────────
         nerd-fonts.jetbrains-mono

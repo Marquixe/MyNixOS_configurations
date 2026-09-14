@@ -7,6 +7,10 @@
 
     home.sessionPath = [ "$HOME/.local/bin" ];
 
+    home.sessionVariables = {
+        GRIMBLAST_EDITOR = "swappy -f";
+    };
+
 
     # ── PROGRAMS ─────────────────────────────────────────────────────────────────────────────────
     programs.home-manager.enable = true;
@@ -94,6 +98,8 @@
         "starship.toml".source              = ./starship/starship.toml; 
         "starship-python.toml".source       = ./starship/starship-python.toml;
         "starship-java.toml".source         = ./starship/starship-java.toml;
+
+        "swappy/config".source         = ./swappy/config;
     };
 
 
@@ -123,6 +129,7 @@
         hyprlock
         hypridle
         grimblast
+        swappy
         wl-clipboard
         cliphist
         clipse
