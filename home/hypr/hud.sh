@@ -3,14 +3,14 @@ SESSION="hud"
 
 # Pick a random animation
 ANIMATIONS=(
-    "asciiquarium"
-    "cmatrix -C cyan"
-    "cbonsai -l -i --life=46 --time=0,001"
-    "pipes.sh -p 5 -R -C -K -r 0 -t 0 -t 1 -t 2 -t 3 -t 4 -t 5 -t 6 -t 7 -t 8 -t 9"
-    "lavat -r 3"
-    "snowmachine snow --speed=5" # --stack=pile
-    #"gping google.com"
-    #"mapscii"
+	"asciiquarium"
+	"cmatrix -C cyan"
+	"cbonsai -l -i --life=46 --time=0,001"
+	"pipes.sh -p 5 -R -C -K -r 10000 -t 0 -t 1 -t 2 -t 3 -t 4 -t 5 -t 6 -t 7 -t 8 -t 9"
+	"lavat -r 3"
+	"snowmachine snow --speed=5" # --stack=pile
+	#"gping google.com"
+	#"mapscii"
 )
 PICK="${ANIMATIONS[$RANDOM%${#ANIMATIONS[@]}]}"
 
@@ -25,14 +25,14 @@ STATS_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$DATE_PANE" -v -l 65 "bas
 #ANIM_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$STATS_PANE" -v -l 45 "$PICK")
 
 if [[ "$PICK" == "cbonsai -l -i --life=46 --time=0,001" ]]; then
-    S1=$((RANDOM + 903))
-    S2=$((RANDOM + 234))
-    S3=$((RANDOM + 653))
-    ANIM_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$STATS_PANE" -v -l 45 "sleep 1; $PICK -s $S1 --wait=3.07")
-    tmux split-window -d -t "$ANIM_PANE" -h -b -p 33 "sleep 1; $PICK -s $S2 --wait=3.33"
-    tmux split-window -d -t "$ANIM_PANE" -h -p 50 "sleep 1; $PICK -s $S3 --wait=3.71"
+	S1=$((RANDOM + 903))
+	S2=$((RANDOM + 234))
+	S3=$((RANDOM + 653))
+	ANIM_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$STATS_PANE" -v -l 45 "sleep 1; $PICK -s $S1 --wait=3.07")
+	tmux split-window -d -t "$ANIM_PANE" -h -b -p 33 "sleep 1; $PICK -s $S2 --wait=3.33"
+	tmux split-window -d -t "$ANIM_PANE" -h -p 50 "sleep 1; $PICK -s $S3 --wait=3.71"
 else
-    tmux split-window -d -t "$STATS_PANE" -v -l 45 "$PICK"
+	tmux split-window -d -t "$STATS_PANE" -v -l 45 "$PICK"
 fi
 
 # split date row

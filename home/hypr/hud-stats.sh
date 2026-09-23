@@ -70,7 +70,10 @@ bar_bat() {
 
 _refresh_public_ip() {
     while true; do
-        pub=$(curl -s --max-time 3 ifconfig.me 2>/dev/null || echo "?")
+        pub=$(curl -s --max-time 3 ifconfig.me 2>/dev/null | tr -d '\r\n')
+        if [[ ! "$pub" =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+            pub="offline"
+        fi
         echo "$pub" >/tmp/hud-pubip
         sleep 300
     done

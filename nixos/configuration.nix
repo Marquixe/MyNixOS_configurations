@@ -194,6 +194,8 @@
         nix-direnv.enable = true;
     };
 
+    programs.wshowkeys.enable = true;
+
     # ── User ─────────────────────────────────────────────────────────────────────────────────────
     users.users.markie = {
         isNormalUser = true;
@@ -206,6 +208,7 @@
         "docker"
         "wireshark"
         "libvirtd"
+        "input"
         ];
     };
 

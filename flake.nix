@@ -8,9 +8,12 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+	nixgl.url = "github:nix-community/nixGL";
   };
 
-  outputs = { self, nixpkgs, home-manager }:
+
+  outputs = { self, nixpkgs, home-manager, nixgl }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -22,6 +25,8 @@
         inherit system;
         modules = [
           ./nixos/configuration.nix
+
+		  { nixpkgs.overlays = [ nixgl.overlay ]; }
 
           home-manager.nixosModules.home-manager
           {

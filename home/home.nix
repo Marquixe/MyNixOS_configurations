@@ -1,15 +1,56 @@
 { config, pkgs, ... }:
 
+let
+    wiv = pkgs.stdenv.mkDerivation {
+        pname = "wiv";
+        version = "unstable";
+
+        src = pkgs.fetchFromGitHub {
+            owner = "0xWal";
+            repo = "wiv";
+            rev = "master";
+            sha256 = "sha256-YD6EngIOutRl4ylLqmn6p5uoMnEqOeWnYXYI3K4WwdU=";
+        };
+
+        nativeBuildInputs = with pkgs; [ meson ninja pkg-config wayland-scanner ];
+        buildInputs = with pkgs; [ cairo libinput pango systemd wayland wayland-protocols libxkbcommon ];
+    };
+
+    karel-the-robot = pkgs.stdenv.mkDerivation {
+        pname = "karel-the-robot";
+        version = "unstable";
+
+        src = pkgs.fetchgit {
+            url = "https://git.kpi.fei.tuke.sk/kpi/karel-the-robot.git";
+            rev = "6893067cb23d011d45b04ac8b5eb78310583ce02";
+            sha256 = "sha256-s2k5iWGwzgQxXjpYVocFc6iBQmPYdrflNNieXGyeUKI=";
+        };
+
+        nativeBuildInputs = with pkgs; [ cmake pkg-config ];
+        buildInputs = with pkgs; [ ncurses check ];
+
+        cmakeFlags = [ "-DCMAKE_POLICY_VERSION_MINIMUM=3.5" "-DBUILD_TESTING=OFF" ];
+
+        postInstall = ''
+            ln -s ${pkgs.ncurses}/lib/libncurses.so $out/lib/libcurses.so
+        '';
+    };
+in
 {
     home.username      = "markie";
     home.homeDirectory = "/home/markie";
     home.stateVersion  = "25.11";
 
     home.sessionPath = [ "$HOME/.local/bin" ];
-
     home.sessionVariables = {
-        GRIMBLAST_EDITOR = "swappy -f";
+        C_INCLUDE_PATH  = "${karel-the-robot}/include:${pkgs.ncurses.dev}/include";
+        LIBRARY_PATH    = "${karel-the-robot}/lib:${pkgs.ncurses}/lib";
+        LD_LIBRARY_PATH = "${karel-the-robot}/lib:${pkgs.ncurses}/lib";
     };
+
+    # home.sessionVariables = {
+    #     GRIMBLAST_EDITOR = "swappy";
+    # };
 
 
     # ── PROGRAMS ─────────────────────────────────────────────────────────────────────────────────
@@ -100,6 +141,17 @@
         "starship-java.toml".source         = ./starship/starship-java.toml;
 
         "swappy/config".source         = ./swappy/config;
+        "hypr/zoom.sh"                 = { source = ./hypr/zoom.sh;        executable = true; };
+        "hypr/toggle-showkeys.sh"      = { source = ./hypr/toggle-showkeys.sh; executable = true; };
+
+
+
+        "clangd/config.yaml".text = ''
+            CompileFlags:
+                Add:
+                    - -I${karel-the-robot}/include
+                    - -I${pkgs.ncurses.dev}/include
+        '';
     };
 
 
@@ -116,6 +168,14 @@
             source     = ./mako/set-alarm.sh;
             executable = true;
         };
+
+		".local/bin/scilab" = {
+        	text = ''
+            	#!/usr/bin/env bash
+            	exec env MESA_GL_VERSION_OVERRIDE=2.1 nixGLIntel ${pkgs.scilab-bin}/bin/scilab "$@"
+        	'';
+        	executable = true;
+    	};
     };
 
 
@@ -130,6 +190,7 @@
         hypridle
         grimblast
         swappy
+        gimp
         wl-clipboard
         cliphist
         clipse
@@ -138,14 +199,18 @@
         wlogout
         mako
         libnotify
+        wiv
+		nixgl.nixGLIntel
 
         # ── Editors ──────────────────────────────────────────────────────────────────────────────
         vim
         neovim
         vscode
         jetbrains.pycharm-oss
+		#jetbrains.webstorm
         xournalpp
         tree-sitter
+		scilab-bin
 
         # ── Editor tools ─────────────────────────────────────────────────────────────────────────
         clang-tools
@@ -304,5 +369,16 @@
         # ── KDE apps ─────────────────────────────────────────────────────────────────────────────
         kdePackages.kate
         thunderbird
+
+
+        # ── Schooling ────────────────────────────────────────────────────────────────────────────
+        gdb
+        valgrind
+        cgdb
+        cppcheck
+        ncurses
+        pkg-config
+        check
+        karel-the-robot
     ];
 }
