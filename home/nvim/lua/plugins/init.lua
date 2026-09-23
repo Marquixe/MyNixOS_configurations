@@ -3,6 +3,11 @@
 
 return {
 
+	{
+		"tpope/vim-sleuth",
+		enabled = false,
+	},
+
 	-- ── Тема ───────────────────────────────────────────────────────────────
 	-- LazyVim за замовчуванням використовує tokyonight
 	-- Catppuccin добре виглядає з твоїм Hyprland:
