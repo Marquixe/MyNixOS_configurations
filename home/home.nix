@@ -113,6 +113,9 @@ in
         "hypr/toggle-player.sh"  = { source = ./hypr/toggle-player.sh;  executable = true; };
         "hypr/wifi.sh"           = { source = ./hypr/wifi.sh;           executable = true; };
 
+		"hypr/monitor-extend.sh" = { source = ./hypr/monitor-extend.sh; executable = true; };
+		"hypr/monitor-mirror.sh" = { source = ./hypr/monitor-mirror.sh; executable = true; };
+
         # "hypr/ask-claude.sh"  = { source = ./hypr/ask-claude.sh;  executable = true; };
         # "hypr/ask-claude.py"  = { source = ./hypr/ask-claude.py;  executable = true; };
 

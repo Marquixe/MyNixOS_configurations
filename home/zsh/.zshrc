@@ -112,6 +112,8 @@ alias ip='ip --color=auto'
 alias diff='delta'                             # better diffs
 alias copy='wl-copy <'
 
+alias teachings='cd ~/TEACH_ME_KING/ && clear'
+
 # ── Keybindings ───────────────────────────────────────────────────────────────
 bindkey '^[[A' history-search-backward   # Up arrow   → search history
 bindkey '^[[B' history-search-forward    # Down arrow → search history
