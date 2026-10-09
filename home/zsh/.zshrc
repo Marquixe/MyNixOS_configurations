@@ -123,6 +123,26 @@ bindkey '^[[3~' delete-char              # Delete key
 
 # ── Functions ─────────────────────────────────────────────────────────────────
 
+nrfv() {
+    echo ""
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo " NixOS rebuild"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo ""
+    echo "Command:"
+    echo "  sudo nixos-rebuild switch --flake ~/dotfiles#thinkpadik"
+    echo ""
+	echo "||| dont forget sudo |||"
+	echo "vvv                  vvv"
+    
+    sudo nixos-rebuild switch \
+        --flake ~/dotfiles#thinkpadik \
+        --show-trace \
+		--print-build-logs \
+        |& nom
+}
+
+
 # mkcd — make a directory and immediately cd into it
 mkcd() { mkdir -p "$1" && cd "$1" }
 
