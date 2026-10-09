@@ -109,6 +109,13 @@ in
         "hypr/hud-stats.sh"   = { source = ./hypr/hud-stats.sh;   executable = true; };
         "hypr/hud-updates.sh" = { source = ./hypr/hud-updates.sh; executable = true; };
 
+		"hypr/hud_cinema/hud.sh"			= { source = ./hypr/hud_cinema/hud.sh; executable = true; };	
+		"hypr/hud_cinema/date.sh"			= { source = ./hypr/hud_cinema/date.sh; executable = true; };
+		"hypr/hud_cinema/updates.sh"		= { source = ./hypr/hud_cinema/updates.sh; executable = true; };
+		"hypr/hud_cinema/stats.sh"			= { source = ./hypr/hud_cinema/stats.sh; executable = true; };
+		"hypr/hud_cinema/now-playing.sh"	= { source = ./hypr/hud_cinema/now-playing.sh; executable = true; };
+
+
         "hypr/spotify-player.sh" = { source = ./hypr/spotify-player.sh; executable = true; };
         "hypr/toggle-player.sh"  = { source = ./hypr/toggle-player.sh;  executable = true; };
         "hypr/wifi.sh"           = { source = ./hypr/wifi.sh;           executable = true; };
@@ -211,7 +218,7 @@ in
         neovim
         vscode
         jetbrains.pycharm-oss
-		#jetbrains.webstorm
+		jetbrains.webstorm
         xournalpp
         tree-sitter
 		scilab-bin
@@ -361,6 +368,11 @@ in
         jp2a
         libcaca
         tplay
+		yt-dlp
+		ffmpeg
+		chafa
+		zstd
+		mpv
 
 
         discord
