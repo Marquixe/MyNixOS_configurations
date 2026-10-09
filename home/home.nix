@@ -109,11 +109,18 @@ in
         "hypr/hud-stats.sh"   = { source = ./hypr/hud-stats.sh;   executable = true; };
         "hypr/hud-updates.sh" = { source = ./hypr/hud-updates.sh; executable = true; };
 
-		"hypr/hud_cinema/hud.sh"			= { source = ./hypr/hud_cinema/hud.sh; executable = true; };	
-		"hypr/hud_cinema/date.sh"			= { source = ./hypr/hud_cinema/date.sh; executable = true; };
-		"hypr/hud_cinema/updates.sh"		= { source = ./hypr/hud_cinema/updates.sh; executable = true; };
-		"hypr/hud_cinema/stats.sh"			= { source = ./hypr/hud_cinema/stats.sh; executable = true; };
-		"hypr/hud_cinema/now-playing.sh"	= { source = ./hypr/hud_cinema/now-playing.sh; executable = true; };
+		"hypr/hud_cinema/hud.sh"			= { source = ./hypr/hud_cinema/hud.sh;			executable = true; };	
+		"hypr/hud_cinema/date.sh"			= { source = ./hypr/hud_cinema/date.sh;			executable = true; };
+		"hypr/hud_cinema/updates.sh"		= { source = ./hypr/hud_cinema/updates.sh;		executable = true; };
+		"hypr/hud_cinema/stats.sh"			= { source = ./hypr/hud_cinema/stats.sh; 		executable = true; };
+		"hypr/hud_cinema/now-playing.sh"	= { source = ./hypr/hud_cinema/now-playing.sh;	executable = true; };
+
+		"hypr/hud_overlay/hud.sh"             = { source = ./hypr/hud_overlay/hud.sh;             executable = true; };
+		"hypr/hud_overlay/anim.sh"            = { source = ./hypr/hud_overlay/anim.sh;            executable = true; };
+		"hypr/hud_overlay/info.sh"            = { source = ./hypr/hud_overlay/info.sh;            executable = true; };
+		"hypr/hud_overlay/stats-compact.sh"   = { source = ./hypr/hud_overlay/stats-compact.sh;   executable = true; };
+		"hypr/hud_overlay/date-compact.sh"    = { source = ./hypr/hud_overlay/date-compact.sh;    executable = true; };
+		"hypr/hud_overlay/updates-compact.sh" = { source = ./hypr/hud_overlay/updates-compact.sh; executable = true; };
 
 
         "hypr/spotify-player.sh" = { source = ./hypr/spotify-player.sh; executable = true; };

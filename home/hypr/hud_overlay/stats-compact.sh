@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# System stats — all metrics, bar width adapts to pane
+# Compact stats for the overlay info bar — everything visible in ~12 rows
 RED=$'\e[0;31m'
 GRN=$'\e[0;32m'
 YLW=$'\e[0;33m'
@@ -8,13 +8,12 @@ MAG=$'\e[0;35m'
 CYN=$'\e[0;36m'
 WHT=$'\e[1;37m'
 DIM=$'\e[2m'
-BLD=$'\e[1m'
 RST=$'\e[0m'
 
 get_cpu() {
 	local a b
 	read -ra a </proc/stat
-	sleep 0.5
+	sleep 0.4
 	read -ra b </proc/stat
 	local idle1=$((a[4] + a[5])) total1=0
 	local idle2=$((b[4] + b[5])) total2=0
@@ -45,39 +44,37 @@ fmt_speed() {
 }
 
 bar() {
-	local pct=$(($1 + 0)) len=${2:-20}
+	local pct=$(($1 + 0)) len=${2:-15}
 	((pct > 100)) && pct=100
 	local filled=$((pct * len / 100))
 	local empty=$((len - filled))
 	local color
 	((pct >= 80)) && color=$RED || ((pct >= 50)) && color=$YLW || color=$GRN
-	printf "${color}["
+	printf "${color}"
 	for ((i = 0; i < filled; i++)); do printf '█'; done
 	printf "${DIM}"
 	for ((i = 0; i < empty; i++)); do printf '░'; done
-	printf "${RST}${color}]${RST}"
+	printf "${RST}"
 }
 
 bar_bat() {
-	local pct=$(($1 + 0)) len=${2:-20}
+	local pct=$(($1 + 0)) len=${2:-15}
 	((pct > 100)) && pct=100
 	local filled=$((pct * len / 100))
 	local empty=$((len - filled))
 	local color
 	((pct <= 20)) && color=$RED || ((pct <= 50)) && color=$YLW || color=$GRN
-	printf "${color}["
+	printf "${color}"
 	for ((i = 0; i < filled; i++)); do printf '█'; done
 	printf "${DIM}"
 	for ((i = 0; i < empty; i++)); do printf '░'; done
-	printf "${RST}${color}]${RST}"
+	printf "${RST}"
 }
 
 _refresh_public_ip() {
 	while true; do
 		pub=$(curl -s --max-time 3 ifconfig.me 2>/dev/null | tr -d '\r\n')
-		if [[ ! "$pub" =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
-			pub="offline"
-		fi
+		[[ ! "$pub" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] && pub="offline"
 		echo "$pub" >/tmp/hud-pubip
 		sleep 300
 	done
@@ -93,28 +90,25 @@ while true; do
 	read -r rx2 tx2 <<<"$(_net_bytes)"
 	rx1=$((rx1 + 0)); rx2=$((rx2 + 0))
 	tx1=$((tx1 + 0)); tx2=$((tx2 + 0))
-	rx_spd=$(((rx2 - rx1) * 2))
-	((rx_spd < 0)) && rx_spd=0
-	tx_spd=$(((tx2 - tx1) * 2))
-	((tx_spd < 0)) && tx_spd=0
+	rx_spd=$(((rx2 - rx1) * 2)); ((rx_spd < 0)) && rx_spd=0
+	tx_spd=$(((tx2 - tx1) * 2)); ((tx_spd < 0)) && tx_spd=0
 
-	ram_pct=$(awk '/MemTotal/{t=$2} /MemAvailable/{a=$2} END{printf "%d", (t-a)/t*100}' /proc/meminfo)
-	ram_str=$(awk '/MemTotal/{t=$2} /MemAvailable/{a=$2} END{printf "%d/%d MB", (t-a)/1024, t/1024}' /proc/meminfo)
+	ram_pct=$(awk '/MemTotal/{t=$2} /MemAvailable/{a=$2} END{printf "%d",(t-a)/t*100}' /proc/meminfo)
+	ram_str=$(awk '/MemTotal/{t=$2} /MemAvailable/{a=$2} END{printf "%d/%dM",(t-a)/1024,t/1024}' /proc/meminfo)
 	bat_pct=$(cat /sys/class/power_supply/BAT0/capacity 2>/dev/null || echo 0)
 	bat_status=$(cat /sys/class/power_supply/BAT0/status 2>/dev/null || echo "")
 	case "$bat_status" in
-		Charging)    bat_icon="charging" ;;
-		Discharging) bat_icon="battery" ;;
-		Full)        bat_icon="full" ;;
-		*)           bat_icon="$bat_status" ;;
+		Charging)    bat_icon="+" ;;
+		Discharging) bat_icon="-" ;;
+		Full)        bat_icon="=" ;;
+		*)           bat_icon="?" ;;
 	esac
 	disk_pct=$(df / | awk 'NR==2{gsub(/%/,"",$5); print $5}')
 	disk_str=$(df -h / | awk 'NR==2{print $3"/"$2}')
 	dl_str=$(fmt_speed $rx_spd)
 	up_str=$(fmt_speed $tx_spd)
-	ip_gw=$(ip route | awk '/default/{print $3}')
-	ip_pub=$(cat /tmp/hud-pubip 2>/dev/null || echo "...")
 	ip_loc=$(hostname -I | awk '{print $1}')
+	ip_pub=$(cat /tmp/hud-pubip 2>/dev/null || echo "...")
 
 	printf '\e[2;2H\e[K'
 	printf " ${YLW}CPU${RST} $(bar $cpu) ${WHT}%3d%%${RST}" $cpu
@@ -123,11 +117,9 @@ while true; do
 	printf '\e[4;2H\e[K'
 	printf " ${GRN}DSK${RST} $(bar $disk_pct) ${WHT}%s${RST}" "$disk_str"
 	printf '\e[5;2H\e[K'
-	printf " ${CYN}BAT${RST} $(bar_bat $bat_pct) ${WHT}%d%% %s${RST}" $bat_pct "$bat_icon"
+	printf " ${CYN}BAT${RST} $(bar_bat $bat_pct) ${WHT}%d%%%s${RST}" $bat_pct "$bat_icon"
 	printf '\e[6;2H\e[K'
-	printf " ${BLU}NET${RST} ${GRN}↓%-12s${RST} ${YLW}↑%s${RST}" "$dl_str" "$up_str"
+	printf " ${BLU}NET${RST} ${GRN}↓%-10s${RST} ${YLW}↑%s${RST}" "$dl_str" "$up_str"
 	printf '\e[7;2H\e[K'
-	printf " ${DIM}IP${RST} ${WHT}%s${RST} ${DIM}>${RST} ${WHT}%s${RST}" "$ip_gw" "$ip_loc"
-	printf '\e[8;2H\e[K'
-	printf " ${DIM}pub${RST} ${WHT}%s${RST}" "$ip_pub"
+	printf " ${DIM}IP${RST} ${WHT}%s${RST}  ${DIM}pub${RST} ${WHT}%s${RST}" "$ip_loc" "$ip_pub"
 done

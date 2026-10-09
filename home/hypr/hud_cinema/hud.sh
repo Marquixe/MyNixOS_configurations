@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# hud_cinema — animation-first HUD layout
-# Animation takes the full left side, info stacked in a narrow right sidebar.
+# hud_cinema — animation-first HUD layout (sidebar)
+# Uses absolute -l values within -x 220 -y 98 so tmux scales proportionally.
 SESSION="hud"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
@@ -22,28 +22,37 @@ tmux kill-session -t $SESSION 2>/dev/null
 sleep 0.2
 
 # ── Create session — animation owns the full window ──────────────────────────
+# 220x98 sets initial proportions; tmux rescales when kitty attaches
 tmux new-session -d -s $SESSION -x 220 -y 98 "$PICK"
 ANIM_PANE=$(tmux display-message -t "$SESSION:0.0" -p "#{pane_id}")
 
-# ── Right sidebar (25% of width) ─────────────────────────────────────────────
-CLOCK=$(tmux split-window -dP -F "#{pane_id}" -t "$ANIM_PANE" -h -p 25 \
+# ── Right sidebar (55 cols) ──────────────────────────────────────────────────
+# Sidebar = 98 rows. Split pattern (same as old HUD — top-down absolute):
+#   split -l N → top keeps (current - N - 1), bottom gets N
+#
+#   clock:   98 - 87 - 1 = 10 rows
+#   date:    87 - 78 - 1 =  8 rows
+#   stats:   78 - 60 - 1 = 17 rows
+#   playing: 60 - 51 - 1 =  8 rows
+#   updates: 51 - 37 - 1 = 13 rows
+#   gping:               = 37 rows
+
+CLOCK=$(tmux split-window -dP -F "#{pane_id}" -t "$ANIM_PANE" -h -l 55 \
 	"tty-clock -s -c -C 6 -f ''")
 
-# Stack info panes vertically inside the sidebar (all percentages so it scales)
-#   clock ~10% | date ~9% | stats ~12% | playing ~10% | updates ~15% | gping ~44%
-DATE_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$CLOCK" -v -p 90 \
+DATE_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$CLOCK" -v -l 87 \
 	"bash $SCRIPT_DIR/date.sh")
 
-STATS_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$DATE_PANE" -v -p 89 \
+STATS_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$DATE_PANE" -v -l 78 \
 	"bash $SCRIPT_DIR/stats.sh")
 
-PLAYING_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$STATS_PANE" -v -p 85 \
+PLAYING_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$STATS_PANE" -v -l 60 \
 	"bash $SCRIPT_DIR/now-playing.sh")
 
-UPDATES_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$PLAYING_PANE" -v -p 80 \
+UPDATES_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$PLAYING_PANE" -v -l 51 \
 	"bash $SCRIPT_DIR/updates.sh")
 
-tmux split-window -d -t "$UPDATES_PANE" -v -p 70 "gping google.com"
+tmux split-window -d -t "$UPDATES_PANE" -v -l 37 "gping google.com"
 
 # ── cbonsai special: triple-split the animation pane ─────────────────────────
 if [[ "$PICK" == "cbonsai -l -i --life=46 --time=0,001" ]]; then
