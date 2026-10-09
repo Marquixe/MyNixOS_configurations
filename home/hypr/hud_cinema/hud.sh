@@ -4,19 +4,7 @@
 SESSION="hud"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-ANIMATIONS=(
-	"asciiquarium"
-	"cmatrix -C cyan"
-	"cbonsai -l -i --life=46 --time=0,001"
-	"snowmachine snow --speed=5"
-	"python3 ~/Work/srandik/term_ascii_art/witch_craft/cauldron2.py"
-	"python3 ~/Work/srandik/term_ascii_art/render_symbol/hud_play.py ~/Work/srandik/term_ascii_art/zst_files/jellyfish.color.zst"
-	"python3 ~/Work/srandik/term_ascii_art/render_symbol/hud_play.py ~/Work/srandik/term_ascii_art/zst_files/bad_apple.color.zst"
-	"python3 ~/Work/srandik/term_ascii_art/render_symbol/hud_play.py ~/Work/srandik/term_ascii_art/zst_files/black_hole.color.zst"
-	"python3 ~/Work/srandik/term_ascii_art/render_symbol/hud_play.py ~/Work/srandik/term_ascii_art/zst_files/tall_tree.color.zst"
-	"python3 ~/Work/srandik/term_ascii_art/render_symbol/hud_play.py ~/Work/srandik/term_ascii_art/zst_files/flovers_on_roots.color.zst"
-)
-PICK="${ANIMATIONS[$RANDOM%${#ANIMATIONS[@]}]}"
+source ~/.config/hypr/hud-animations.sh
 
 tmux kill-session -t $SESSION 2>/dev/null
 sleep 0.2

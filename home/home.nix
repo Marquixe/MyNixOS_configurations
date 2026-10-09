@@ -104,6 +104,7 @@ in
         "hypr/hyprland.conf".source    = ./hypr/hyprland.conf;
         "hypr/hyprpaper.conf".source   = ./hypr/hyprpaper.conf;
         #hypr hud
+        "hypr/hud-animations.sh" = { source = ./hypr/hud-animations.sh; executable = true; };
         "hypr/hud.sh"         = { source = ./hypr/hud.sh;         executable = true; };
         "hypr/hud-date.sh"    = { source = ./hypr/hud-date.sh;    executable = true; };
         "hypr/hud-stats.sh"   = { source = ./hypr/hud-stats.sh;   executable = true; };

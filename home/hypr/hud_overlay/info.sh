@@ -1,29 +1,30 @@
 #!/usr/bin/env bash
-# Transparent info bar — horizontal layout: clock | stats | date | updates
-# Runs inside a short, wide, transparent kitty window at the bottom of the screen.
-SESSION="hud-info"
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+# Exact same layout as hud_old, but the animation pane is empty.
+# Loops forever — when tmux session is killed (reload), it restarts.
+while true; do
+	SESSION="hud-info"
+	tmux kill-session -t $SESSION 2>/dev/null
+	sleep 0.2
 
-tmux kill-session -t $SESSION 2>/dev/null
-sleep 0.1
+	tmux new-session -d -s $SESSION -x 220 -y 98 "tty-clock -s -c -C 6 -f ''"
 
-# Layout within ~240 cols (1920px wide):
-#   clock(40) | stats(90) | date(50) | updates(remaining)
-#
-# Using absolute -l values within -x 240 initial size
-tmux new-session -d -s $SESSION -x 240 -y 14 \
-	"tty-clock -s -c -C 6 -f ''"
+	DATE_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$SESSION:0.0" -v -l 80 "bash ~/.config/hypr/hud-date.sh")
+	STATS_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$DATE_PANE" -v -l 65 "bash ~/.config/hypr/hud-stats.sh")
 
-STATS_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$SESSION:0.0" -h -l 195 \
-	"bash $SCRIPT_DIR/stats-compact.sh")
+	# empty pane where animation would be — transparent
+	tmux split-window -d -t "$STATS_PANE" -v -l 45 ""
 
-DATE_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$STATS_PANE" -h -l 100 \
-	"bash $SCRIPT_DIR/date-compact.sh")
+	# split date row
+	tmux split-window -d -t "$DATE_PANE" -h -b -p 33 ""
+	tmux split-window -d -t "$DATE_PANE" -h -p 50 "bash ~/.config/hypr/hud-updates.sh"
 
-tmux split-window -d -t "$DATE_PANE" -h -l 50 \
-	"bash $SCRIPT_DIR/updates-compact.sh"
+	# split stats row
+	tmux split-window -d -t "$STATS_PANE" -h "gping google.com"
 
-tmux set-option -t $SESSION status off
-tmux set-option -t $SESSION pane-border-style "fg=#1e1e2e"
-tmux set-option -t $SESSION pane-active-border-style "fg=#1e1e2e"
-tmux attach-session -t $SESSION
+	tmux set-option -t $SESSION status off
+	tmux set-option -t $SESSION pane-border-style fg=black
+	tmux set-option -t $SESSION pane-active-border-style fg=black
+	tmux attach-session -t $SESSION
+
+	sleep 0.5
+done

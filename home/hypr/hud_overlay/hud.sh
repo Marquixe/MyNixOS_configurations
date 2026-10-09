@@ -1,19 +1,26 @@
 #!/usr/bin/env bash
-# hud_overlay — fullscreen animation + transparent info bar on top
-# Launches two kitty windows:
-#   hud-anim-kitty    — fullscreen animation (opaque)
-#   hud-info-kitty    — bottom info strip (transparent, sees animation through)
+# hud_overlay — fullscreen animation + transparent info overlay
+# First call: spawns both kitty windows
+# Subsequent calls: kills tmux sessions, the while-loops restart them
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-# Kill old instances
-hyprctl dispatch closewindow "class:hud-anim-kitty" 2>/dev/null
-hyprctl dispatch closewindow "class:hud-info-kitty" 2>/dev/null
-sleep 0.2
+# Check if kitty windows already exist
+anim_exists=$(hyprctl clients -j 2>/dev/null | grep -c "hud-anim-kitty")
+info_exists=$(hyprctl clients -j 2>/dev/null | grep -c "hud-info-kitty")
 
-# Animation window (fullscreen behind)
-kitty --class hud-anim-kitty -e bash "$SCRIPT_DIR/anim.sh" &
+if [[ $anim_exists -gt 0 && $info_exists -gt 0 ]]; then
+	# ── Reload: kill tmux sessions, while-loops in anim.sh/info.sh restart ─
+	tmux kill-session -t hud-anim 2>/dev/null
+	tmux kill-session -t hud-info 2>/dev/null
+else
+	# ── First launch: spawn kitty windows ──────────────────────────────────
+	pkill -f 'kitty --class hud-anim-kitty' 2>/dev/null
+	pkill -f 'kitty --class hud-info-kitty' 2>/dev/null
+	tmux kill-session -t hud-anim 2>/dev/null
+	tmux kill-session -t hud-info 2>/dev/null
+	sleep 0.3
 
-sleep 0.3
-
-# Info overlay (transparent strip at bottom)
-kitty --class hud-info-kitty -e bash "$SCRIPT_DIR/info.sh" &
+	kitty --class hud-anim-kitty -o background_opacity=0 -o font_size=6 -e bash "$SCRIPT_DIR/anim.sh" &
+	sleep 0.5
+	kitty --class hud-info-kitty -o background_opacity=0 -e bash "$SCRIPT_DIR/info.sh" &
+fi

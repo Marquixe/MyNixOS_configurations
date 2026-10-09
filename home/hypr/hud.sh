@@ -1,32 +1,7 @@
 #!/usr/bin/env bash
 SESSION="hud"
 
-# Pick a random animation
-ANIMATIONS=(
-	"asciiquarium"
-	"cmatrix -C cyan"
-	"cbonsai -l -i --life=46 --time=0,001"
-	#"pipes.sh -p 5 -R -C -K -r 10000 -t 0 -t 1 -t 2 -t 3 -t 4 -t 5 -t 6 -t 7 -t 8 -t 9"
-	#"lavat -r 3"
-	"snowmachine snow --speed=5" # --stack=pile
-	#"gping google.com"
-	#"mapscii"
-	"python3 ~/Work/srandik/term_ascii_art/witch_craft/cauldron2.py"
-	"python3 ~/Work/srandik/term_ascii_art/render_symbol/hud_play.py ~/Work/srandik/term_ascii_art/zst_files/jellyfish.color.zst"
-
-	"python3 ~/Work/srandik/term_ascii_art/render_symbol/hud_play.py ~/Work/srandik/term_ascii_art/zst_files/bad_apple.color.zst"
-	"python3 ~/Work/srandik/term_ascii_art/render_symbol/hud_play.py ~/Work/srandik/term_ascii_art/zst_files/black_hole.color.zst"
-	"python3 ~/Work/srandik/term_ascii_art/render_symbol/hud_play.py ~/Work/srandik/term_ascii_art/zst_files/tall_tree.color.zst"
-	"python3 ~/Work/srandik/term_ascii_art/render_symbol/hud_play.py ~/Work/srandik/term_ascii_art/zst_files/flovers_on_roots.color.zst"
-
-	#"python3 ~/Work/srandik/term_ascii_art/render_symbol/hud_play.py ~/Work/srandik/term_ascii_art/zst_files/neon_eyes.color.zst"
-	#"python3 ~/Work/srandik/term_ascii_art/render_symbol/hud_play.py ~/Work/srandik/term_ascii_art/zst_files/black_hole.color.zst"
-	#"python3 ~/Work/srandik/term_ascii_art/render_symbol/hud_play.py ~/Work/srandik/term_ascii_art/zst_files/looking_skull.color.zst"
-	#"python3 ~/Work/srandik/term_ascii_art/render_symbol/hud_play.py ~/Work/srandik/term_ascii_art/zst_files/spinning_skull.color.zst"
-	#"python3 ~/Work/srandik/term_ascii_art/render_symbol/hud_play.py ~/Work/srandik/term_ascii_art/zst_files/thunder.color.zst"
-
-)
-PICK="${ANIMATIONS[$RANDOM%${#ANIMATIONS[@]}]}"
+source ~/.config/hypr/hud-animations.sh
 
 tmux kill-session -t $SESSION 2>/dev/null
 sleep 0.2
