@@ -160,6 +160,9 @@ in
         "starship-java.toml".source         = ./starship/starship-java.toml;
 
         "swappy/config".source         = ./swappy/config;
+
+        # peaclock
+        "peaclock/config".source       = ./peaclock/config;
         "hypr/zoom.sh"                 = { source = ./hypr/zoom.sh;        executable = true; };
         "hypr/toggle-showkeys.sh"      = { source = ./hypr/toggle-showkeys.sh; executable = true; };
 
@@ -381,6 +384,7 @@ in
 		chafa
 		zstd
 		mpv
+		peaclock
 
 
         discord

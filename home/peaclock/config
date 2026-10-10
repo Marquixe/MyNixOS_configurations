@@ -1,0 +1,27 @@
+# peaclock config — dim but visible, hh:mm:ss
+set hour-24 on
+set seconds on
+set date on
+set auto-size on
+set auto-ratio on
+
+view digital
+
+# dim muted blue-grey for active blocks
+style active-fg #6272a4
+style inactive-fg #282a36
+style colon-fg #44475a
+
+# no background colors (transparent terminal)
+style active-bg clear
+style inactive-bg clear
+style colon-bg clear
+style background clear
+
+# date style — subtle
+style date #44475a
+date %A, %d %b %Y
+
+fill ░
+fill-active █
+fill-colon █

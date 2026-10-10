@@ -6,7 +6,7 @@ while true; do
 	tmux kill-session -t $SESSION 2>/dev/null
 	sleep 0.2
 
-	tmux new-session -d -s $SESSION -x 220 -y 98 "tty-clock -s -c -C 6 -f ''"
+	tmux new-session -d -s $SESSION -x 220 -y 98 "peaclock --config-dir ~/.config/peaclock"
 
 	DATE_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$SESSION:0.0" -v -l 80 "bash ~/.config/hypr/hud-date.sh")
 	STATS_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$DATE_PANE" -v -l 65 "bash ~/.config/hypr/hud-stats.sh")

@@ -26,7 +26,7 @@ ANIM_PANE=$(tmux display-message -t "$SESSION:0.0" -p "#{pane_id}")
 #   gping:               = 37 rows
 
 CLOCK=$(tmux split-window -dP -F "#{pane_id}" -t "$ANIM_PANE" -h -l 55 \
-	"tty-clock -s -c -C 6 -f ''")
+	"peaclock --config-dir ~/.config/peaclock")
 
 DATE_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$CLOCK" -v -l 87 \
 	"bash $SCRIPT_DIR/date.sh")
