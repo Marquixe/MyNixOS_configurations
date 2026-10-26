@@ -90,6 +90,7 @@ in
                 "browser.ctrlTab.sortByRecentlyUsed" = true;
             };
         };
+		configPath = ".mozilla/firefox";
     };
 
 
