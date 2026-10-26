@@ -224,11 +224,16 @@ in
         wiv
 		nixgl.nixGLIntel
 
+		grim
+		slurp
+		wl-clipboard
+		swappy
+
         # ── Editors ──────────────────────────────────────────────────────────────────────────────
         vim
         neovim
         vscode
-        jetbrains.pycharm-oss
+        jetbrains.pycharm
 		jetbrains.webstorm
         xournalpp
         tree-sitter

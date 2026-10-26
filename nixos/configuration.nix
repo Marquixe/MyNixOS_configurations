@@ -156,11 +156,16 @@
     services.blueman.enable = true;
 
     # ── Journal tuning ───────────────────────────────────────────────────────────────────────────
-    services.journald.extraConfig = ''
-        SystemMaxUse=500M
-        MaxRetentionSec=2week
-        MaxLevelStore=debug
-    '';
+    # services.journald.extraConfig = ''
+    #     SystemMaxUse=500M
+    #     MaxRetentionSec=2week
+    #     MaxLevelStore=debug
+    # '';
+	services.journald.settings.Journal = {
+		SystemMaxUse = "500M";
+		MaxRetentionSec = "2week";
+		MaxLevelStore = "debug";
+	};
 
     # ── Docker ───────────────────────────────────────────────────────────────────────────────────
     virtualisation.docker = {

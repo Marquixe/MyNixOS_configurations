@@ -20,8 +20,8 @@ style background clear
 
 # date style — subtle
 style date #44475a
-date %A, %d %b %Y
+date "%A, %d %b %Y"
 
-fill ░
-fill-active █
-fill-colon █
+fill "░"
+fill-active "█"
+fill-colon "█"

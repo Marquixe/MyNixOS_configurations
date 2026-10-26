@@ -29,6 +29,9 @@ ANIMATIONS=(
 	#"$PLAYER $ZST_OV/blood_kitty.color.zst"
 	"$PLAYER $ZST_OV/jelly.color.zst"
 	"$PLAYER $ZST_OV/bad_apple_overlay.color.zst"
+	#"$PLAYER $ZST_OV/rain_droplets_overlay.color.zst"
+	"$PLAYER $ZST_OV/sakura_bnw_overlay.color.zst"
+	# "$PLAYER $ZST_OV/rain_droplets_overlay.color.zst"
 )
 
 PICK="${ANIMATIONS[$RANDOM%${#ANIMATIONS[@]}]}"

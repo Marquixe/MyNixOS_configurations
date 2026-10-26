@@ -91,7 +91,10 @@ alias ps='procs'
 alias nrf='sudo nixos-rebuild switch --flake ~/dotfiles#thinkpadik'
 alias nrb='sudo nixos-rebuild boot --flake ~/dotfiles#thinkpadik'
 alias nrt='sudo nixos-rebuild test   --flake ~/dotfiles#thinkpadik |& nom'
-alias nup='nix flake update ~/dotfiles'
+# alias nup='nix flake update ~/dotfiles'
+# alias nup='nix flake update --flake ~/dotfiles'
+alias nup='nix flake update'
+
 
 # alias nrs='sudo nixos-rebuild switch |& nom'   # rebuild with progress
 # alias nrb='sudo nixos-rebuild boot |& nom'     # rebuild, apply on next boot
