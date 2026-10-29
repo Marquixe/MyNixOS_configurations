@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# ~/.config/hypr/hud-date.sh
+# ~/.config/hypr/hud/hud-date.sh
 # Centered date display — updates every second, no blinking
 
 WHT=$'\e[1;37m'

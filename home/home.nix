@@ -101,40 +101,46 @@ in
         # "nvim".source    = ./nvim;
         # "nvim".source   = config.lib.file.mkOutOfStoreSymlink "/home/markie/dotfiles/home/nvim";
 
-        # hypr
-        "hypr/hyprland.conf".source    = ./hypr/hyprland.conf;
+        # hypr (main config is Lua; legacy/hyprland.conf kept for reference, not deployed)
+        "hypr/hyprland.lua".source     = ./hypr/hyprland.lua;
         "hypr/hyprpaper.conf".source   = ./hypr/hyprpaper.conf;
-        #hypr hud
-        "hypr/hud-animations.sh" = { source = ./hypr/hud-animations.sh; executable = true; };
-        "hypr/hud.sh"         = { source = ./hypr/hud.sh;         executable = true; };
-        "hypr/hud-date.sh"    = { source = ./hypr/hud-date.sh;    executable = true; };
-        "hypr/hud-stats.sh"   = { source = ./hypr/hud-stats.sh;   executable = true; };
-        "hypr/hud-updates.sh" = { source = ./hypr/hud-updates.sh; executable = true; };
+        "hypr/legacy/hyprland.conf".source = ./hypr/legacy/hyprland.conf;
 
-		"hypr/hud_cinema/hud.sh"			= { source = ./hypr/hud_cinema/hud.sh;			executable = true; };	
-		"hypr/hud_cinema/date.sh"			= { source = ./hypr/hud_cinema/date.sh;			executable = true; };
-		"hypr/hud_cinema/updates.sh"		= { source = ./hypr/hud_cinema/updates.sh;		executable = true; };
-		"hypr/hud_cinema/stats.sh"			= { source = ./hypr/hud_cinema/stats.sh; 		executable = true; };
-		"hypr/hud_cinema/now-playing.sh"	= { source = ./hypr/hud_cinema/now-playing.sh;	executable = true; };
+        # hypr/hud — main HUD (tmux panes) + animation helpers
+        "hypr/hud/hud-animations.sh" = { source = ./hypr/hud/hud-animations.sh; executable = true; };
+        "hypr/hud/hud.sh"            = { source = ./hypr/hud/hud.sh;            executable = true; };
+        "hypr/hud/hud-date.sh"       = { source = ./hypr/hud/hud-date.sh;       executable = true; };
+        "hypr/hud/hud-stats.sh"      = { source = ./hypr/hud/hud-stats.sh;      executable = true; };
+        "hypr/hud/hud-updates.sh"    = { source = ./hypr/hud/hud-updates.sh;    executable = true; };
 
-		"hypr/hud_overlay/hud.sh"             = { source = ./hypr/hud_overlay/hud.sh;             executable = true; };
-		"hypr/hud_overlay/anim.sh"            = { source = ./hypr/hud_overlay/anim.sh;            executable = true; };
-		"hypr/hud_overlay/info.sh"            = { source = ./hypr/hud_overlay/info.sh;            executable = true; };
-		"hypr/hud_overlay/stats-compact.sh"   = { source = ./hypr/hud_overlay/stats-compact.sh;   executable = true; };
-		"hypr/hud_overlay/date-compact.sh"    = { source = ./hypr/hud_overlay/date-compact.sh;    executable = true; };
-		"hypr/hud_overlay/updates-compact.sh" = { source = ./hypr/hud_overlay/updates-compact.sh; executable = true; };
+        # hypr/hud/cinema — sidebar HUD layout
+        "hypr/hud/cinema/hud.sh"          = { source = ./hypr/hud/cinema/hud.sh;          executable = true; };
+        "hypr/hud/cinema/date.sh"         = { source = ./hypr/hud/cinema/date.sh;         executable = true; };
+        "hypr/hud/cinema/updates.sh"      = { source = ./hypr/hud/cinema/updates.sh;      executable = true; };
+        "hypr/hud/cinema/stats.sh"        = { source = ./hypr/hud/cinema/stats.sh;        executable = true; };
+        "hypr/hud/cinema/now-playing.sh"  = { source = ./hypr/hud/cinema/now-playing.sh;  executable = true; };
 
+        # hypr/hud/overlay — fullscreen animation + transparent info overlay
+        "hypr/hud/overlay/hud.sh"             = { source = ./hypr/hud/overlay/hud.sh;             executable = true; };
+        "hypr/hud/overlay/anim.sh"            = { source = ./hypr/hud/overlay/anim.sh;            executable = true; };
+        "hypr/hud/overlay/info.sh"            = { source = ./hypr/hud/overlay/info.sh;            executable = true; };
+        "hypr/hud/overlay/stats-compact.sh"   = { source = ./hypr/hud/overlay/stats-compact.sh;   executable = true; };
+        "hypr/hud/overlay/date-compact.sh"    = { source = ./hypr/hud/overlay/date-compact.sh;    executable = true; };
+        "hypr/hud/overlay/updates-compact.sh" = { source = ./hypr/hud/overlay/updates-compact.sh; executable = true; };
 
-        "hypr/spotify-player.sh" = { source = ./hypr/spotify-player.sh; executable = true; };
-        "hypr/toggle-player.sh"  = { source = ./hypr/toggle-player.sh;  executable = true; };
-        "hypr/wifi.sh"           = { source = ./hypr/wifi.sh;           executable = true; };
+        # hypr/tools — helper scripts bound from hyprland.lua
+        "hypr/tools/spotify-player.sh"  = { source = ./hypr/tools/spotify-player.sh;  executable = true; };
+        "hypr/tools/toggle-player.sh"   = { source = ./hypr/tools/toggle-player.sh;   executable = true; };
+        "hypr/tools/wifi.sh"            = { source = ./hypr/tools/wifi.sh;            executable = true; };
+        "hypr/tools/monitor-extend.sh"  = { source = ./hypr/tools/monitor-extend.sh;  executable = true; };
+        "hypr/tools/monitor-mirror.sh"  = { source = ./hypr/tools/monitor-mirror.sh;  executable = true; };
+        "hypr/tools/workspaces-split.sh" = { source = ./hypr/tools/workspaces-split.sh; executable = true; };
+        "hypr/tools/zoom.sh"            = { source = ./hypr/tools/zoom.sh;            executable = true; };
+        "hypr/tools/toggle-showkeys.sh" = { source = ./hypr/tools/toggle-showkeys.sh; executable = true; };
 
-		"hypr/monitor-extend.sh" 	= { source = ./hypr/monitor-extend.sh; executable = true; };
-		"hypr/monitor-mirror.sh" 	= { source = ./hypr/monitor-mirror.sh; executable = true; };
-		"hypr/workspaces-split.sh"	= { source = ./hypr/workspaces-split.sh;  executable = true; };
-
-        # "hypr/ask-claude.sh"  = { source = ./hypr/ask-claude.sh;  executable = true; };
-        # "hypr/ask-claude.py"  = { source = ./hypr/ask-claude.py;  executable = true; };
+        # hypr/ask-claude — not deployed yet (uncomment when needed)
+        # "hypr/ask-claude/ask-claude.sh"  = { source = ./hypr/ask-claude/ask-claude.sh;  executable = true; };
+        # "hypr/ask-claude/ask-claude.py"  = { source = ./hypr/ask-claude/ask-claude.py;  executable = true; };
 
         # mako
         "mako/config".source           = ./mako/config;
@@ -164,8 +170,6 @@ in
 
         # peaclock
         "peaclock/config".source       = ./peaclock/config;
-        "hypr/zoom.sh"                 = { source = ./hypr/zoom.sh;        executable = true; };
-        "hypr/toggle-showkeys.sh"      = { source = ./hypr/toggle-showkeys.sh; executable = true; };
 
 
 
@@ -391,10 +395,12 @@ in
 		zstd
 		mpv
 		peaclock
+		ascii
 
 
         discord
         blender
+
 
         # ── Music ────────────────────────────────────────────────────────────────────────────────
         spotify

@@ -8,15 +8,15 @@ while true; do
 
 	tmux new-session -d -s $SESSION -x 220 -y 98 "peaclock --config-dir ~/.config/peaclock"
 
-	DATE_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$SESSION:0.0" -v -l 80 "bash ~/.config/hypr/hud-date.sh")
-	STATS_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$DATE_PANE" -v -l 65 "bash ~/.config/hypr/hud-stats.sh")
+	DATE_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$SESSION:0.0" -v -l 80 "bash ~/.config/hypr/hud/hud-date.sh")
+	STATS_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$DATE_PANE" -v -l 65 "bash ~/.config/hypr/hud/hud-stats.sh")
 
 	# empty pane where animation would be — transparent
 	tmux split-window -d -t "$STATS_PANE" -v -l 45 ""
 
 	# split date row
 	tmux split-window -d -t "$DATE_PANE" -h -b -p 33 ""
-	tmux split-window -d -t "$DATE_PANE" -h -p 50 "bash ~/.config/hypr/hud-updates.sh"
+	tmux split-window -d -t "$DATE_PANE" -h -p 50 "bash ~/.config/hypr/hud/hud-updates.sh"
 
 	# split stats row
 	tmux split-window -d -t "$STATS_PANE" -h "gping google.com"

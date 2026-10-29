@@ -4,7 +4,7 @@
 SESSION="hud"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-source ~/.config/hypr/hud-animations.sh
+source ~/.config/hypr/hud/hud-animations.sh
 
 tmux kill-session -t $SESSION 2>/dev/null
 sleep 0.2

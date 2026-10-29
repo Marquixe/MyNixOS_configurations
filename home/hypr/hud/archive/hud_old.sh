@@ -27,8 +27,8 @@ tmux split-window -t $SESSION:0.2 -v -l 45 "$PICK"
 
 tmux new-session -d -s $SESSION -x 220 -y 98 "tty-clock -s -c -C 6 -f ''"
 # vertical stack
-DATE_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$SESSION:0.0" -v -l 80 "bash ~/.config/hypr/hud-date.sh")
-STATS_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$DATE_PANE" -v -l 65 "bash ~/.config/hypr/hud-stats.sh")
+DATE_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$SESSION:0.0" -v -l 80 "bash ~/.config/hypr/hud/hud-date.sh")
+STATS_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$DATE_PANE" -v -l 65 "bash ~/.config/hypr/hud/hud-stats.sh")
 #ANIM_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$STATS_PANE" -v -l 45 "$PICK")
 
 if [[ "$PICK" == "cbonsai -l -i --life=46 --time=0,001" ]]; then
@@ -44,7 +44,7 @@ fi
 
 # split date row
 tmux split-window -d -t "$DATE_PANE" -h -b -p 33 ""
-tmux split-window -d -t "$DATE_PANE" -h -p 50 "bash ~/.config/hypr/hud-updates.sh"
+tmux split-window -d -t "$DATE_PANE" -h -p 50 "bash ~/.config/hypr/hud/hud-updates.sh"
 
 # split stats row
 tmux split-window -d -t "$STATS_PANE" -h "gping google.com"

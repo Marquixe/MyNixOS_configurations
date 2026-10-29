@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# ~/.config/hypr/hud-stats.sh
+# ~/.config/hypr/hud/hud-stats.sh
 RED=$'\e[0;31m'
 GRN=$'\e[0;32m'
 YLW=$'\e[0;33m'

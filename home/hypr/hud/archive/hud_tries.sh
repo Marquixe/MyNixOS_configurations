@@ -35,8 +35,8 @@ else
 fi
 
 # 2. Решту додаємо ЗВЕРХУ (-b), кожна забирає місце в анімації.
-STATS_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$ANIM_PANE" -v -b -l $H_STATS "bash ~/.config/hypr/hud-stats.sh")
-DATE_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$STATS_PANE" -v -b -l $H_DATE "bash ~/.config/hypr/hud-date.sh")
+STATS_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$ANIM_PANE" -v -b -l $H_STATS "bash ~/.config/hypr/hud/hud-stats.sh")
+DATE_PANE=$(tmux split-window -dP -F "#{pane_id}" -t "$STATS_PANE" -v -b -l $H_DATE "bash ~/.config/hypr/hud/hud-date.sh")
 tmux split-window -d -t "$DATE_PANE" -v -b -l $H_CLOCK "tty-clock -s -c -C 6 -f ''"
 
 # 3. Горизонтальні поділи (після вертикальних, інакше вони зачеплять лише одну панель).
@@ -46,7 +46,7 @@ if [[ "$PICK" == "cbonsai"* ]]; then
 fi
 
 tmux split-window -d -t "$DATE_PANE" -h -b -p 33 ""
-tmux split-window -d -t "$DATE_PANE" -h -p 50 "bash ~/.config/hypr/hud-updates.sh"
+tmux split-window -d -t "$DATE_PANE" -h -p 50 "bash ~/.config/hypr/hud/hud-updates.sh"
 tmux split-window -d -t "$STATS_PANE" -h "gping google.com"
 
 tmux set-option -t $SESSION status off

@@ -13,5 +13,5 @@ else
 		--override font_size=11 \
 		--override window_padding_width=10 \
 		--title "spotify-player" \
-		~/.config/hypr/spotify-player.sh &
+		~/.config/hypr/tools/spotify-player.sh &
 fi
