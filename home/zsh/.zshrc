@@ -88,20 +88,22 @@ alias du='dust'
 alias ps='procs'
 
 # ── Aliases — NixOS ───────────────────────────────────────────────────────────
-alias nrf='sudo nixos-rebuild switch --flake ~/dotfiles#thinkpadik'
-alias nrb='sudo nixos-rebuild boot --flake ~/dotfiles#thinkpadik'
-alias nrt='sudo nixos-rebuild test   --flake ~/dotfiles#thinkpadik |& nom'
-# alias nup='nix flake update ~/dotfiles'
-# alias nup='nix flake update --flake ~/dotfiles'
-alias nup='nix flake update'
+alias nrf='sudo nixos-rebuild switch --flake ~/dotfiles#thinkpadik'                  # build + apply now + default at boot
+alias nrboot='sudo nixos-rebuild boot --flake ~/dotfiles#thinkpadik'                 # apply only after reboot
+alias nrtest='sudo nixos-rebuild test --flake ~/dotfiles#thinkpadik |& nom'          # apply now, no boot entry
+alias nrollback='sudo nixos-rebuild switch --rollback'                               # back to previous generation
+alias ngeneration='sudo nixos-rebuild list-generations'                              # list generations
+alias ndiff='nvd diff /run/booted-system /run/current-system'                        # what changed since boot
 
+# flake inputs: "update" only fetches newer versions into flake.lock, applies nothing
+alias nfu_all='(cd ~/dotfiles && nix flake update)'                                  # ALL inputs, includes nixpkgs (can break things)
+alias nfu_home='(cd ~/dotfiles && nix flake update home-manager)'                    # home-manager only
+alias nfu_nixgl='(cd ~/dotfiles && nix flake update nixgl)'                          # nixGL only
+alias nfcheck='nix flake check --no-build ~/dotfiles'                                # validate flake, no build
 
-# alias nrs='sudo nixos-rebuild switch |& nom'   # rebuild with progress
-# alias nrb='sudo nixos-rebuild boot |& nom'     # rebuild, apply on next boot
-# alias nrt='sudo nixos-rebuild test |& nom'     # test without making permanent
-alias ngc='sudo nix-collect-garbage -d'        # delete old generations
-# alias nup='sudo nix flake update'              # update flake inputs
-alias nsh='nix-shell'                          # drop into a nix shell
+alias ngarbage='sudo nix-collect-garbage -d'        # delete old generations
+alias nshell='nix-shell'                          # drop into a nix shell
+alias nmetadata= 'nix flake metadata ~/dotfiles'
 
 # ── Aliases — misc ────────────────────────────────────────────────────────────
 alias v='nvim'
@@ -110,7 +112,7 @@ alias vim='nvim'
 alias c='clear'
 alias q='exit'
 alias reload='source ~/.zshrc'
-alias zshrc='nvim ~/.zshrc'
+alias zshrc='nvim ~/dotfiles/home/zsh/.zshrc'
 alias ip='ip --color=auto'
 alias diff='delta'                             # better diffs
 alias copy='wl-copy <'
