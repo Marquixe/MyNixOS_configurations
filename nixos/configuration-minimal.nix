@@ -1,12 +1,7 @@
 # Minimal configuration — Hyprland + essentials only.
 # Faster first build, useful for a new machine or recovery.
-#
-# NOT wired into flake.nix yet — to use it, add to flake.nix:
-#   nixosConfigurations.minimal = nixpkgs.lib.nixosSystem {
-#     system = "x86_64-linux";
-#     modules = [ ./nixos/configuration-minimal.nix home-manager... ];
-#   };
-# then: sudo nixos-rebuild switch --flake .#minimal
+# Build with:  sudo nixos-rebuild switch --flake ~/dotfiles#minimal
+# Needs nixos/hardware-configuration.nix for THIS machine (regenerate on a new one).
 
 { config, pkgs, ... }:
 
@@ -30,9 +25,7 @@
     options   = "--delete-older-than 14d";
   };
 
-  swapDevices = [
-    { device = "/swapfile"; }
-  ];
+  # swapDevices = [ { device = "/swapfile"; } ];   # enable only if /swapfile exists
 
   boot.kernel.sysctl = {
     "vm.swappiness"             = 10;

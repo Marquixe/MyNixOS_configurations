@@ -42,7 +42,19 @@
         java = import ./shells/java.nix { inherit pkgs; };
       };
 
-      # якщо колись додаси мінімальну конфігурацію для іншої машини:
-      # nixosConfigurations.minimalbox = nixpkgs.lib.nixosSystem { ... };
+      # minimal: Hyprland + essentials only, for a fresh install or recovery
+      nixosConfigurations.minimal = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          ./nixos/configuration-minimal.nix
+
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.markie = import ./home/home-minimal.nix;
+          }
+        ];
+      };
     };
 }
