@@ -40,9 +40,9 @@
   boot.loader.systemd-boot.configurationLimit = 10;
 
   # ── Networking ────────────────────────────────────────────────────────────
-  networking.hostName              = "thinkpadik";
-  networking.wireless.enable       = false;
-  networking.networkmanager.enable = true;
+  networking.hostName                    = "thinkpadik";
+  networking.networkmanager.enable       = true;
+  networking.networkmanager.wifi.backend = "wpa_supplicant";
 
   networking.firewall = {
     enable                = true;
@@ -112,10 +112,10 @@
 
   # services.printing.enable = true;  # enable if you need printing
 
-  services.journald.extraConfig = ''
-    SystemMaxUse=500M
-    MaxRetentionSec=2week
-  '';
+  services.journald.settings.Journal = {
+    SystemMaxUse     = "500M";
+    MaxRetentionSec  = "2week";
+  };
 
   # virtualisation.docker = { ... };  # enable when you need containers
   # programs.wireshark.enable = true; # enable when you need packet capture
